@@ -1,0 +1,136 @@
+<!-- Start Shopify-Clearpay Europe Placement JavaScript Snippet (v1.0.0)-->
+  {% if template contains 'product' or template contains 'cart' %}
+      <script src="https://js.afterpay.com/afterpay-1.x.js" type="text/javascript"></script>
+  {% endif %}
+
+  {% if template contains 'product' %}
+      <script type='text/javascript'>
+        function updatePrice(clearpay_price_selector) {
+
+          let currentPrice = null;
+          const availablePrices = document.querySelectorAll(clearpay_price_selector);
+          availablePrices.forEach(function(priceElement) {
+            if (window.getComputedStyle(priceElement.parentNode.parentNode).display !== 'none') {
+              currentPrice = priceElement.innerText;
+            }
+          });
+
+          if (window.previousPrice !== currentPrice) {
+            window.previousPrice = currentPrice;
+            currentPrice = currentPrice.replace(',', '.');
+            const placement = document.querySelector('afterpay-placement');
+            placement.setAttribute('data-amount', currentPrice);
+          }
+        }
+
+        function getCurrentPrice(clearpay_price_selector) {
+
+          let currentPrice = null;
+          const availablePrices = document.querySelectorAll(clearpay_price_selector);
+          availablePrices.forEach(function(priceElement) {
+            if (window.getComputedStyle(priceElement.parentNode.parentNode).display !== 'none') {
+              currentPrice = priceElement.innerText;
+            }
+          });
+          const regex = /[^\d.,]+/g;
+          const matchTrailingZeroes = /^(?:\d+\.\d+)(\.|\,\d+)$/;
+          return currentPrice.replace(regex, '').replace(matchTrailingZeroes, '');
+        }
+
+        function isCartTotalValid(totalPrice, clearpay_max, clearpay_min) {
+          return (totalPrice < clearpay_max && totalPrice > clearpay_min);
+        }
+
+        // Editable Values:
+        const clearpay_min = '0.00';                      // As per your Clearpay contract
+        const clearpay_max = '800.00';                    // As per your Clearpay contract
+        const clearpay_placement_parent_location = '.product__price';   // The Location of the Clearpay Placement
+        const clearpay_price_classname = '.product__price-wrapper';   // CSS Selector for the variable product page
+
+        // Non-editable Values:
+        const clearpayPlacementLocale = '{{ shop.locale }}_{{ shop.locale | upcase }}';
+        const clearpayPlacementCurrency = '{{ cart.currency.iso_code }}';
+        const doesProductPriceVaries = '{{ product.price_varies }}';
+        const configAmount = getCurrentPrice(clearpay_price_classname).replace(',', '.');
+
+        const viewportWidth = window.innerWidth;
+        let placementConfig = {
+          targetSelector: clearpay_placement_parent_location, attributes: {
+            locale: clearpayPlacementLocale, currency: clearpayPlacementCurrency, amount: configAmount, size: 'sm',
+          },
+        };
+        if (viewportWidth <= 500) {
+          placementConfig = {
+            targetSelector: clearpay_placement_parent_location, attributes: {
+              locale: clearpayPlacementLocale, currency: clearpayPlacementCurrency, amount: configAmount, size: 'xs', logoType:'compact-badge'
+            },
+          };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          if (isCartTotalValid(configAmount, clearpay_max, clearpay_min)) {
+            Afterpay.createPlacements(placementConfig);
+            if (doesProductPriceVaries) {
+              window.previousPrice = 0;
+              setInterval(updatePrice, 2000, clearpay_price_classname);
+            }
+          }
+        });
+      </script>
+  {% endif %}
+  {% if template contains 'cart' %}
+      <script type='text/javascript'>
+        function getCurrentPrice(clearpay_price_selector) {
+
+          let currentPrice = null;
+          const availablePrices = document.querySelectorAll(clearpay_price_selector);
+          availablePrices.forEach(function(priceElement) {
+            if (window.getComputedStyle(priceElement.parentNode.parentNode).display !== 'none') {
+              currentPrice = priceElement.innerText;
+            }
+          });
+          const regex = /[^\d.,]+/g;
+          const matchTrailingZeroes = /^(?:\d+\.\d+)(\.|\,\d+)$/;
+          return currentPrice.replace(regex, '').replace(matchTrailingZeroes, '');
+        }
+
+        function isCartTotalValid(totalPrice, clearpay_max, clearpay_min) {
+          return (totalPrice < clearpay_max && totalPrice > clearpay_min);
+        }
+
+        // Editable Values:
+        const clearpay_min = '0.00';                      // As per your Clearpay contract
+        const clearpay_max = '800.00';                    // As per your Clearpay contract
+        const clearpay_placement_parent_location = '.cart__row--table';   // The Location of the Clearpay Placement
+        const clearpay_price_classname = '#MainContent > div > div > div > form > div:nth-child(3) > div > div > div.grid.grid--full.cart__row--table > div:nth-child(2) > p';   // CSS Selector for the cart subtotal
+
+        // Non-editable Values:
+        const clearpayPlacementLocale = '{{ shop.locale }}_{{ shop.locale | upcase }}';
+        const clearpayPlacementCurrency = '{{ cart.currency.iso_code }}';
+        const configAmount = getCurrentPrice(clearpay_price_classname).replace(',', '.');
+
+        const viewportWidth = window.innerWidth;
+        let placementConfig = {
+          targetSelector: clearpay_placement_parent_location, attributes: {
+            locale: clearpayPlacementLocale, currency: clearpayPlacementCurrency, amount: configAmount, size: 'sm',
+          },
+        };
+        if (viewportWidth <= 500) {
+          placementConfig = {
+            targetSelector: clearpay_placement_parent_location, attributes: {
+              locale: clearpayPlacementLocale, currency: clearpayPlacementCurrency, amount: configAmount, size: 'xs', logoType:'compact-badge'
+            },
+          };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          if (isCartTotalValid(configAmount, clearpay_max, clearpay_min)) {
+            Afterpay.createPlacements(placementConfig);
+          }
+        });
+      </script>
+  {% else %}
+<!-- Clearpay Placement disabled: template ==> {{ template }} -->
+  {% endif %}
+<!-- End Shopify-Clearpay Europe Placement JavaScript Snippet (v1.0.0) -->
+

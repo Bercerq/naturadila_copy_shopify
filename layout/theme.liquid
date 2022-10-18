@@ -1,0 +1,291 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+<script src="{{ 'UTcart.js' | asset_url }}" defer="defer"></script>
+
+{% if template contains 'upsell' %}
+    <meta name="robots" content="noindex">
+  {% endif %}
+{% render 'hs-critical-css' %}
+
+{% include 'taginstall-head' %}
+  
+{% comment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% render 'hs-defer-css' with filename: 'https://fonts.googleapis.com/css2?family=Poppins&display=swap', pages: 'index,product' | split: ',', minify: false, local: false %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% render 'hs-defer-css' with filename: 'https://fonts.googleapis.com/css2?family=Poppins:ital', pages: 'index,product' | split: ',', minify: false, local: false %}
+{% endcomment %}  
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% render 'hs-defer-css' with filename: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap', pages: 'index,product' | split: ',', minify: false, local: false %}
+  
+  
+  
+{%- comment -%}smartseo_integration_begin{%- endcomment -%}{% include 'smartseo' %}{%- comment -%}smartseo_integration_end{%- endcomment -%}
+
+{% if template == "article" %}
+  {% include 'json-ld-article' %}
+{% endif %}
+{% if template == "product" %}
+  {% include 'json-ld-product' %}
+{% endif %}
+ 
+  {% render 'hyperspeed-fonts' %}
+
+  {% include 'hyperspeed-imports' %}
+  
+   <meta name="google-site-verification" content="PxshY6CdPdItqrOL71tB05HfZeER8fGlf2ypxSQ5LT8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="format-detection" content="telephone=no">
+  
+ <meta name="ahrefs-site-verification" content="ca8605019b27749676ebe597e32305540a1c33ef4224a1bc51172a0b0eef54cb">
+  
+ {% include 'smart-ads' %}
+  
+
+  {%- if settings.favicon -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+
+  {% include 'seo-title' %}
+  {%- comment smartseo_integration_begin_meta_data -%}<title>{{ seo_title }}</title>{%- endcomment smartseo_integration_end_meta_data -%}
+
+  {%- if page_description -%}
+  {%- comment smartseo_integration_begin_meta_data -%}<meta name="description" content="{{ page_description | escape }}">{%- endcomment smartseo_integration_end_meta_data -%}
+  {%- endif -%}
+
+  {% include 'social-meta-tags' %}
+
+  {% include 'font-face' %}
+  {% render 'hs-defer-css' with filename: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&display=swap', pages: 'index,product' | split: ',', minify: false, local: false %}
+
+  {% render 'hs-defer-css' with filename: 'theme.scss.css', pages: 'index,product' | split: ',', minify: true, local: true %}
+  
+  {% style %}
+    .collection-item__title {
+      font-size: {{ settings.type_collection_size | times: 0.8 }}px;
+    }
+
+    @media screen and (min-width: 769px) {
+      .collection-item__title {
+        font-size: {{ settings.type_collection_size }}px;
+      }
+    }
+  {% endstyle %}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    window.theme = window.theme || {};
+    theme.strings = {
+      addToCart: {{ 'products.product.add_to_cart' | t | json }},
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }},
+      stockLabel: {{ 'products.product.stock_label' | t: count: '[count]' | json }},
+      willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+      willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+      waitingForStock: {{ 'products.product.waiting_for_stock' | t | json }},
+      savePrice: {{ 'products.general.save_html' | t: saved_amount: '[saved_amount]' | json }},
+      cartEmpty: {{ 'cart.general.empty' | t | json }},
+      cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }}
+    };
+    theme.settings = {
+      dynamicVariantsEnable: true,
+      dynamicVariantType: {{ settings.variant_type | json }},
+      cartType: {{ settings.cart_type | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      saveType: {{ settings.product_save_type | json }},
+      recentlyViewedEnabled: false,
+      predictiveSearch: {{ settings.predictive_search_enabled }},
+      predictiveSearchType: {{ settings.search_type | json }},
+      inventoryThreshold: {{ settings.inventory_threshold }},
+      quickView: {{ settings.quick_shop_enable }},
+      themeName: 'Impulse',
+      themeVersion: "3.0.3"
+    };
+    theme.allProducts = [];
+    {% for pr in collections.all.products %}
+    	theme.allProducts.push({ handle: "{{ pr.handle }}", titleColor: "{{ pr.metafields.custom.color }}", subTitle: "{{ pr.metafields.quantity.sub_title }}", secondImage: "{{ pr.images[1] | img_url: '130x' }}" });
+    {% endfor %}
+  </script>
+
+  {{ content_for_header }}
+
+  <script src="{{ 'vendor-scripts-v6.js' | asset_url }}" defer="defer"></script>
+
+  {% if shop.enabled_currencies.size > 1 %}
+    {% render 'hs-defer-css' with filename: 'currency-flags.min.css', pages: 'index,product' | split: ',', minify: false, local: true %}
+  {% endif %}
+
+  <script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script>
+
+  {%- if request.page_type contains 'customers/' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+{% comment %}
+
+  {% endcomment %}
+
+  {% if handle contains 'gnocchis-de-patata-con-espinacas-tomates-cherry-confitados-y-anacardos' or handle contains 'trucos-para-aumentar-el-deseo-sexual' or handle contains '5-libros-para-leer-en-vacaciones-de-verano' or handle contains 'suplementacion-deportiva-que-es-y-para-que-sirve' or handle contains 'como-la-suplementacion-puede-complementar-una-dieta-keto' or handle contains 'prueba-1' or handle contains '10-consejos-para-aprender-a-meditar' or handle contains 'consejos-para-hacer-unas-fotos-de-viaje-top' or handle contains 'los-efectos-positivos-de-la-musica-en-el-rendimiento-deportivo' or handle contains '5-tecnicas-para-organizar-bien-tus-dias' or handle contains 'consejos-para-iniciarse-en-el-surf' or handle contains 'brownie-de-aguacate-chocolate-y-pistachos' or handle contains 'que-es-la-alimentacion-consciente-por-que-es-importante' or handle contains '5-ingredientes-que-te-ayudaran-a-cuidar-tu-piel-este-verano'%}
+
+<meta name="robots" content="noindex"> {% endif %}
+  
+  <script type="text/javascript">
+var _iub = _iub || [];
+_iub.csConfiguration = {"enableRemoteConsent":true,"askConsentAtCookiePolicyUpdate":true,"consentOnContinuedBrowsing":false,"perPurposeConsent":true,"lang":"es","siteId":1893971,"enableCMP":true,"googleAdditionalConsentMode":true,"cookiePolicyId":25276149, "banner":{ "brandBackgroundColor":"none","brandTextColor":"black","acceptButtonDisplay":true,"customizeButtonDisplay":true,"acceptButtonColor":"#000000","acceptButtonCaptionColor":"white","customizeButtonColor":"#000000","customizeButtonCaptionColor":"#ffffff","rejectButtonColor":"#000000","rejectButtonCaptionColor":"white","position":"float-center","textColor":"black","backgroundColor":"#f1f2f2" }};
+
+    _iub.csConfiguration.perPurposeConsent = false;
+    _iub.csConfiguration.callback = {
+        onPreferenceFirstExpressed: function(consent) {
+            window.Shopify.customerPrivacy.setTrackingConsent(consent.consent, function() {});
+        }
+    };
+
+
+</script>
+<script src="//cdn.iubenda.com/cs/tcf/stub-v2.js" type="text/javascript">
+</script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+
+
+<!-- Tracking API -->
+<script type="text/javascript">
+    window.Shopify.loadFeatures([{
+            name: 'consent-tracking-api',
+            version: '0.1',
+        }, ],
+        function(error) {
+            if (error) {
+                throw error;
+            }
+        });
+</script>
+  
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "aokwo9qmqh");
+</script>
+</head>
+    
+</head>
+  <script src="https://www.googleoptimize.com/optimize.js?id=OPT-TN79K8T"></script> 
+  <!-- anti-flicker snippet (recommended)  -->
+<style>.async-hide { opacity: 0 !important} </style>
+<script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',500,
+{'OPT-TN79K8T':true});</script>
+
+<body data-currencySymbol="{{ cart.currency.symbol }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" data-transitions="false">
+
+<script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+
+
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  <div id="PageContainer" class="page-container">
+    <div class="transition-body">
+
+    {% section 'header' %}
+
+      <main class="main-content" id="MainContent">
+        {% capture ICART_FULL_PAGE_LAYOUT %}{{ content_for_layout }}{% endcapture %}{% include 'icart-variables', ICART_FULL_PAGE_LAYOUT: ICART_FULL_PAGE_LAYOUT %}
+      </main>
+
+      {% comment %}
+      {% section 'footer-promotions' %}
+      {% section 'testimonials' %}
+      {% endcomment %}
+      {% if template != 'blog' and template != 'article' %}
+      	{% section 'instafeed' %}
+      {% endif %}
+      {% section 'newsletter' %}
+      {% section 'footer' %}
+
+    </div>
+  </div>
+
+  {% section 'newsletter-popup' %}
+
+  {%- if settings.cart_type == 'drawer' -%}
+    {%- include 'ajax-cart-template' -%}
+  {%- endif -%}
+
+  {% comment %}
+    Custom markup for slider arrows using theme icons
+  {% endcomment %}
+  <div class="hide">
+    <button id="prevArrowTemplate" class="slick-prev" aria-label="{{ 'general.pagination.previous' | t }}" type="button">
+      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-left" viewBox="0 0 284.49 498.98"><path d="M249.49 0a35 35 0 0 1 24.75 59.75L84.49 249.49l189.75 189.74a35.002 35.002 0 1 1-49.5 49.5L10.25 274.24a35 35 0 0 1 0-49.5L224.74 10.25A34.89 34.89 0 0 1 249.49 0z"/></svg>
+      <span class="icon__fallback-text">{{ 'general.pagination.previous' | t }}</span>
+    </button>
+    <button id="nextArrowTemplate" class="slick-next" aria-label="{{ 'general.pagination.next' | t }}" type="button">
+      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 284.49 498.98"><path d="M35 498.98a35 35 0 0 1-24.75-59.75l189.74-189.74L10.25 59.75a35.002 35.002 0 0 1 49.5-49.5l214.49 214.49a35 35 0 0 1 0 49.5L59.75 488.73A34.89 34.89 0 0 1 35 498.98z"/></svg>
+      <span class="icon__fallback-text">{{ 'general.pagination.next' | t }}</span>
+    </button>
+  </div>
+
+  {%- if settings.predictive_search_enabled -%}
+    {%- include 'predictive-template' -%}
+  {%- endif -%}
+
+  {% include 'video-modal' %}
+  {% include 'photoswipe-template' %}
+  {% if template contains 'product' %}
+    {% include 'recently-viewed-product-template' %}
+  {% endif %}
+  
+  <script defer="defer" src="https://www.dwin1.com/21798.js" type="text/javascript"></script>
+  
+
+  {% comment %}{% if template contains 'product' %}{% include 'add-to-cart-sticky' %}{% endif %}{% endcomment %}
+  
+  {% include 'adroll' %}
+  {% include 'clearpay-placement' %}
+  
+  
+{% include 'taginstall-body' %}
+<link rel="stylesheet" href="{{ 'redesign-cartcss.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'redisgn-collection.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'redisgn-product.css' | asset_url }}" media="print" onload="this.media='all'">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+{% render 'UTcart' %}
+{%- capture var -%}{ {% for product in collections['all'].products %}{% for
+  variant in product.variants %}"{{ variant.id }}":"{{
+    variant.inventory_quantity
+  }}-{{ variant.inventory_policy }}" cap={{ variant.compare_at_price }}={% unless forloop.last %},{% endunless
+  %}{% endfor %} {% endfor %} }{%- endcapture -%}
+  <script type="application/json" id="all_variant_track">
+    {{var | json}}
+  </script>
+
+<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=21428"></script>
+<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+{% include 'icart-drawer' %}</body>
+<script crossorigin='anonymous' src="https://widebundle.com/scripttag.php?shop=naturadika.myshopify.com&v={{ "now" | date: "%s"}}"></script>
+</html>
+
+
+

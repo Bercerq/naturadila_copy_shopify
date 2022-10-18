@@ -1,0 +1,26 @@
+{% if block.settings.show_footer_title %}
+<p class="h4 footer__title hide widescreen--show">{{ block.settings.title }}</p>
+<button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn widescreen--hide" aria-controls="Footer-{{ block.id }}">
+  {{ block.settings.title }}
+  {% include 'collapsible-icons' %}
+</button>
+{% endif %}
+<div
+     {% if block.settings.show_footer_title %}
+     id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--wide"
+     {% endif %}>
+  <div class="collapsible-content__inner">
+    <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
+      {% unless shop.enabled_payment_types == empty %}
+      <ul class="inline-list payment-icons footer__section">
+        {% for type in shop.enabled_payment_types %}
+        <li class="icon--payment">
+          {{ type | payment_type_svg_tag }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endunless %}
+
+    </div>
+  </div>
+</div>

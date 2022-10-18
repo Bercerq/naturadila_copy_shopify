@@ -1,0 +1,104 @@
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div
+  class="featured-products-with-banner"
+  data-section-id="{{ section.id }}"
+  data-section-type="products-with-banners">
+  {% if section.settings.title != blank %}
+    <div class="section-header">
+      <h2>{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+    <div class="promos">
+      <div class="promos-slider" id="Promos-{{ section.id }}" data-count="{{ section.blocks.size }}">
+        {% for block in section.blocks %}
+        <div class="promos-wrapper">
+          <div
+            class="promos-slide promos-slide--{{ block.id }}"
+            data-aos="row-of-{{ section.blocks.size }}"
+            data-id="{{ block.id }}"
+            {{ block.shopify_attributes }}>
+            
+            {% case block.type %}
+              {% when 'banner' %}
+                <div
+                  class="image-wrap text-spacing promos-image">
+                  {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt }}">
+                  <noscript>
+                    {% assign hs_data_src = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ block.settings.image.alt }}" class="lazyloaded lazyload hs-lazyload hs-id-61e88d93" data-aspectratio="{{ block.settings.image.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ block.settings.image | img_url: '400x' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                  </noscript>
+                </div>
+              {% when 'product' %}
+                {%- assign product = all_products[block.settings.product] -%}
+                {%- assign grid_item_width = 'medium-up--one-half' -%}
+                {%- include 'featured-product-grid-item' -%}
+              {% else %}
+            {% endcase %}
+          </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Products with banners",
+    "class": "index-section",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner",
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      },
+	  {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+		  {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Promotional products with banners",
+      "category": "Promotional",
+      "blocks": []
+    }]
+  }
+{% endschema %}

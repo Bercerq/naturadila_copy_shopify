@@ -1,0 +1,108 @@
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="reviews-carousel"
+  class="ekomi-reviews">
+  <div class="page-width">
+    <div class="rating-block">
+      <h2 class="title">Esto es lo que dicen de nosotros</h2>
+      <div class="rating" onclick="window.open('https://www.ekomi.es/testimonios-naturadika.es.html','_blank')">
+        <div class="stars inactive">
+          <div class="stars active"></div>
+        </div>
+      </div>
+      <div class="info">
+        <a class="image" href="https://www.ekomi.es" target="_blank">
+          <img src="https://sw-assets.ekomiapps.de/resources/es_seal_gold-105.png" class="sseal" title="eKomi gold seal Award" alt="eKomi gold seal">
+        </a>
+        <p class="text">Más de <strong>1000</strong> reviews de <strong>5 estrellas</strong></p>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="reviews-carousel-wrapper" id="ReviwsCarousel-{{ section.id }}" data-count={{ section.blocks.size }}>
+        {% for block in section.blocks %}
+        <div class="review-box review-slide--{{ block.id }}">
+          <div class="review-content">
+            <h3 class="title">{{ block.settings.title }}</h3>
+            <div class="info">
+              <span class="label">{{ block.settings.label }}</span>
+              <span class="date">{{ block.settings.date }}</span>
+            </div>
+            <div class="rating" onclick="window.open('https://www.ekomi.es/testimonios-naturadika.es.html','_blank')">
+              <div class="stars inactive">
+                <div class="stars active" style="width:{{block.settings.rating}}%"></div>
+              </div>
+            </div>
+            <p class="text">{{ block.settings.review }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+
+{% schema %}
+  {
+    "name": "Naturadika eKomi reviews",
+	"class": "index-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+	],
+ 	"blocks": [
+      {
+        "type": "review",
+        "name": "Review",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+		  {
+            "type": "text",
+            "id": "label",
+            "label": "Label"
+          },
+          {
+            "type": "text",
+            "id": "date",
+            "label": "Date"
+          },
+          {
+            "type": "range",
+            "id": "rating",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Range",
+            "default": 90
+          },
+          {
+            "type": "text",
+            "id": "review",
+            "label": "Review"
+          }
+        ]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Naturadika eKomi reviews",
+        "category": "Text",
+        "blocks": [
+        ]
+      }
+    ]
+  }
+{% endschema %}

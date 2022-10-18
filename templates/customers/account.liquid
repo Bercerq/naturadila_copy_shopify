@@ -1,0 +1,97 @@
+{% paginate customer.orders by 20 %}
+
+<div class="account-content page-content">
+  <div class="account-content-wrapper">
+    <div class="account-block account-block-image">
+      <div class="account-page-image">
+        <img src="{{ settings.page_banner_account | img_url: 'master' }}" alt="{{ settings.page_banner_account.alt }}" />
+      </div>
+    </div>
+    <div class="account-block account-block-info">
+      <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+        <h1 class="section-header__title">{{ 'customer.account.title' | t }}</h1>
+        <span class="welcome-message">{{ 'naturadika.welcome' | t }} {{ customer.name }}</span>
+        <a href="{{ routes.account_logout_url }}" class="logout-link">{{ 'layout.customer.log_out'| t }}</a>
+      </header>
+      
+      <hr class="hr--medium">
+      
+      <div class="account-sub-content">
+        <div class="account-sub-block">
+          <h3>{{ 'customer.account.details' | t }}</h3>
+          <span class="default-address">{{ customer.default_address | format_address }}</span>
+          <span class="addresses"><a href="{{ routes.account_addresses_url }}" class="text-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></span>
+        </div>
+        
+        <div class="account-sub-block">
+          <h2>{{ 'customer.orders.title' | t }}</h2>
+
+          {% if customer.orders.size != 0 %}
+
+          {% comment %}
+          <table class="table--responsive table--small-text">
+            <thead>
+              <tr>
+                <th>{{ 'customer.orders.order_number' | t }}</th>
+                <th>{{ 'customer.orders.date' | t }}</th>
+                <th>{{ 'customer.orders.payment_status' | t }}</th>
+                <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th>{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+              <tr class="table__section">
+                <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+                <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | time_tag: format: 'date' }}</td>
+                <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endcomment %}
+          
+          <div class="orders-wrapper">
+            {% for order in customer.orders %}
+              <ul class="order-item">
+                <li class="order-number">
+                  <label>{{ 'customer.orders.order_number' | t }}:</label>
+                  <span>{{ order.name | link_to: order.customer_url }}</span>
+                </li>
+                <li class="order-date">
+                  <label>{{ 'customer.orders.date' | t }}:</label>
+                  <span>{{ order.created_at | time_tag: format: 'date' }}</span>
+                </li>
+                <li class="order-payment-status">
+                  <label> {{ 'customer.orders.payment_status' | t }}:</label>
+                  <span>{{ order.financial_status_label }}</span>
+                </li>
+                <li class="order-fulfillment-status">
+                  <label>{{ 'customer.orders.fulfillment_status' | t }}:</label>
+                  <span>{{ order.fulfillment_status_label }}</span>
+                </li>
+                <li class="order-total">
+                  <label>{{ 'customer.orders.total' | t }}:</label>
+                  <span>{{ order.total_price | money }}</span>
+                </li>
+              </ul>
+			{% endfor %}
+          </div>
+            
+          {% else %}
+          <span class="no-orders">{{ 'customer.orders.none' | t }}</span>
+
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+  </div>
+{% endpaginate %}

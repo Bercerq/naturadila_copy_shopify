@@ -1,0 +1,127 @@
+{%- if settings.blog_carousel and settings.blog_carousel != blog.handle -%}
+
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div
+     class="page-width blog-carousel text-{{ section.settings.align_text }}"
+     data-section-id="{{ section.id }}"
+     data-section-type="blog-carousel">
+  
+  {% if section.settings.title != blank %}
+    <div class="section-header">
+      <h2>{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+
+  
+  {% if section.settings.blog_carousel %}
+  <div class="blog-carousel-wrapper{% if section.settings.carousel_enabled %} slick-enabled{% endif %}">
+    <div class="blog-slider blog-list" id="Blogs-{{ section.id }}" data-count="{% if section.settings.carousel_enabled %}{{ section.settings.items_count }}{% else %}0{% endif %}">
+      {% for article in blogs[sections.settings.blog_carousel].articles limit: section.settings.items_count %}
+      <div class="blog-post blog-post-wrapper">
+        <div class="blog-post-content">
+          <a href="{{ article.url }}" class="article__grid-image">
+            {% assign hs_data_src = article | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ article.title }}" class="lazyload hs-lazyload hs-id-16dc9966" data-aspectratio="{{ article.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ article | img_url: 'large' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+          </a>
+          <div class="article__grid-meta">
+            <a href="{{ article.url }}" class="article__title">{{ article.title }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}  
+  <div class="blog-carousel-wrapper{% if section.settings.carousel_enabled %} slick-enabled{% endif %}">
+    <div class="blog-slider blog-list" id="Blogs-{{ section.id }}" data-count="{% if section.settings.carousel_enabled %}{{ section.blocks.size }}{% else %}0{% endif %}">
+      {% for block in section.blocks %}
+      {% assign article = articles[block.settings.article] %}
+      <div class="blog-post blog-post-wrapper">
+        <div class="blog-post-content">
+          <a href="{{ article.url }}" class="article__grid-image">
+            {% assign hs_data_src = article | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ article.title }}" class="lazyload hs-lazyload hs-id-16dc9966" data-aspectratio="{{ article.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ article | img_url: 'large' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+          </a>
+          <div class="article__grid-meta">
+            <a href="{{ article.url }}" class="article__title">{{ article.title }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Blog Carousel",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Blog Carousel"
+      },
+	  {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "range",
+        "id": "items_count",
+		"min" : 4,
+		"max" : 10,
+		"step" : 1,
+		"default" : 4,
+        "label": "Number of items"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      },
+	  {
+        "type": "checkbox",
+        "id": "carousel_enabled",
+        "label": "Enable Carousel"
+      },
+      {
+		"type" : "checkbox",
+		"id" : "divider",
+		"label" : "Show section divider"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "blog_post",
+        "name": "Blog Post",
+        "settings": [
+          {
+            "type": "article",
+            "id": "article",
+            "label": "Artcile"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

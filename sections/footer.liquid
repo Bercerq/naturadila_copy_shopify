@@ -1,0 +1,417 @@
+{%- assign show_selectors = false -%}
+{%- assign currency_selector = false -%}
+{%- assign locale_selector = false -%}
+
+{%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
+  {%- assign currency_selector = true -%}
+{%- endif -%}
+
+{%- if section.settings.show_locale_selector and shop.enabled_locales.size > 1 -%}
+  {%- assign locale_selector = true -%}
+{%- endif -%}
+
+{%- if currency_selector or locale_selector -%}
+  {%- assign show_selectors = true -%}
+{%- endif -%}
+
+<footer class="site-footer" data-section-id="{{ section.id }}" data-section-type="footer-section">
+  <div class="page-width">
+    <div class="grid footer-grid">
+      {%- assign row_width = 0 -%}
+      {% for block in section.blocks %}
+        {%- assign row_width = row_width | plus: block.settings.container_width -%}
+        {% if row_width > 100 %}
+          <div class="footer__clear small--hide"></div>
+          {%- assign row_width = row_width | minus: 100 -%}
+        {% endif %}
+
+        <div {{ block.shopify_attributes }} class="footer-box-item grid__item footer__item--{{ block.id }}" data-type="{{ block.type }}">
+          {% case block.type %}
+          {% when 'logo_social' %}
+            {% include 'footer-logo', block: block %}
+          {% when 'custom' %}
+            {% include 'footer-custom-text', block: block %}
+          {% when 'newsletter' %}
+            {% include 'footer-newsletter', block: block %}
+          {% when 'menu' %}
+            {% include 'footer-menu', block: block %}
+          {% when 'payment' %}
+            {% include 'footer-payments', block: block %}
+          {% when 'social' %}
+            {% include 'footer-social-icons', block: block %}
+          {% when 'ekomi' %}
+            {% include 'footer-ekomi', block: block %}
+          {% endcase %}
+        </div>
+      {% endfor %}
+      <ul class="stores-section">
+        <li class="active">
+          <a href="https://naturadika.es/">ESPAÑA</a>
+        </li>
+        <li>
+          <a href="https://naturadika.it/" target="_blank">Italia</a>
+        </li>
+        <li>
+          <a href="https://naturadika.fr/" target="_blank">Francia</a>
+        </li>
+      </ul>
+    </div>
+
+    {%- if show_selectors -%}
+      <div class="footer__section">
+        {%- include 'multi-selectors',
+          locale_selector: locale_selector,
+          currency_selector: currency_selector,
+          show_currency_flags: section.settings.show_currency_flags
+          location: 'footer'
+        -%}
+      </div>
+    {%- endif -%}
+
+    {% if block.type == 'logo' %}
+    <div class="grid__item medium-up--hide">
+      {% include 'footer-logo', block: block %}
+    </div>
+    {% endif %}
+  </div>
+  
+  {% if  section.settings.footer_logo != blank %}
+    <div class="footer-logo">
+      {% comment %}{% assign hs_data_src = section.settings.footer_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="Footer Logo" class="lazyload hs-lazyload hs-id-7017b5d3" data-aspectratio="{{ section.settings.footer_logo.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ section.settings.footer_logo | img_url: 'master' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>{% endcomment %}
+      {% include 'footer-logo-img' %}
+    </div>
+  {% endif %}
+  
+  {% if section.settings.show_eKomi_widget %}
+    {% include 'footer-ekomi' %}
+  {% endif %}
+  
+  <div class="footer__copyright-menu-wrapper">
+    {% if section.settings.bottom_menu != blank %}
+      <div class="bottom-menu-wrapper">
+        <ul class="bottom-menu">
+          {% for link in linklists[section.settings.bottom_menu].links %}
+          <li>
+            {% case link.url %}
+              {% when '/pages/politica-de-cookies' %}
+                <span class="obfuscated-anchor" data-link="L3BhZ2VzL3BvbGl0aWNhLWRlLWNvb2tpZXM=">{{ link.title }}</span>
+              {% when '/pages/aviso-legal' %}
+                <span class="obfuscated-anchor" data-link="L3BhZ2VzL2F2aXNvLWxlZ2Fs">{{ link.title }}</span>
+              {% when '/pages/politica-de-privacidad' %}
+                <span class="obfuscated-anchor" data-link="L3BhZ2VzL3BvbGl0aWNhLWRlLXByaXZhY2lkYWQ=">{{ link.title }}</span>
+              {% else %}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endcase %}
+          </li>
+          {% endfor %}
+          <li>
+            <a href="#" class="iubenda-advertising-preferences-link">MODIFICAR PREFERENCIAS DE PUBLICIDAD</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
+    {% if section.settings.show_copyright %}
+      <p class="footer__small-text">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }} 
+        {% if section.settings.copyright_text != blank %}
+        	{{ section.settings.copyright_text }}
+        {% endif %}
+      </p>
+    {% endif %}
+  </div>
+  
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_links_text",
+        "label": "Footer Social Links Text"
+      },
+      {
+        "type": "header",
+        "content": "Language selector",
+        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_locale_selector",
+        "label": "Show language selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Currency selector",
+        "info": "To add a currency, go to your [currency settings.](/admin/settings/payments)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_currency_selector",
+        "label": "Show currency selector",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_currency_flags",
+        "label": "Show currency flags",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Additional footer content"
+      },
+      {
+        "type": "image_picker",
+        "id": "footer_logo",
+        "label": "Footer Logo image"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_copyright",
+        "label": "Show copyright"
+      },
+      {
+        "type": "text",
+        "id": "copyright_text",
+        "label": "Additional copyright text"
+      },
+	  {
+        "type": "link_list",
+        "id": "bottom_menu",
+        "label": "Bottom Navigation",
+        "info": "This menu won't show dropdown items"
+      },
+	  {
+        "type": "header",
+        "content": "eKomi Widget"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_eKomi_widget",
+        "label": "Show eKomi Widget"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_social",
+        "name": "Logo",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo image"
+          },
+          {
+            "type": "range",
+            "id": "desktop_logo_height",
+            "label": "Logo height",
+            "default": 50,
+            "min": 20,
+            "max": 120,
+            "unit": "px"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Navigation",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Choose a menu",
+            "default": "footer",
+            "info": "This menu won't show dropdown items"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "name": "Newsletter and social",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+          {
+            "type": "paragraph",
+            "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers)."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Sign up and save"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "info": "Optional",
+            "default": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "custom",
+        "name": "Custom text",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Add your own custom text here.</p>"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+	  {
+		"type": "payment",
+        "name": "Payment icons",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+		  {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom text"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+		]
+	  },
+	  {
+		"type": "social",
+        "name": "Social icons",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+		  {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom text"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+		]
+	  },
+	  {
+		"type": "ekomi",
+        "name": "eKomi widget",
+        "settings": [
+		{
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+		]
+	  }
+    ],
+    "default": {
+      "settings": {},
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {}
+        },
+        {
+          "type": "logo_social",
+          "settings": {}
+        }
+      ]
+    }
+  }
+{% endschema %}

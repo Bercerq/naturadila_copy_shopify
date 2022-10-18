@@ -1,0 +1,29 @@
+{% if template contains 'collection' %}
+{% for pr in collection.products %}
+{% assign pr_ids = pr_ids | append: '"' | append: pr.id | append: '"'  %}
+{% unless forloop.last %}
+{% assign pr_ids = pr_ids | append: ', ' %}
+{% endunless %}
+{% endfor %}
+{% endif %}
+
+<script async="" src="https://webtrafficsource.com/js/v1/rtg.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+window.wwData = window.wwData || [];
+
+window.wwData.push(
+
+  { event: "ACCOUNT", account: "naturadika" },
+
+  {%- if template contains 'product' -%}
+  { event: "PRODUCT", productID: "{{ product.id }}"}
+  {%- elsif template contains 'collection' -%}
+  { event: "LIST", listProductIDs: [{{ pr_ids }}]}
+  {%- else -%}
+  { event: "PAGE_VIEW"}
+  {%- endif -%}
+
+ );
+</script> 

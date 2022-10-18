@@ -1,0 +1,122 @@
+<div class="login-content page-content">
+  <div class="login-content-wrapper">
+
+    <div class="login-block login-block-image">
+      <div class="login-page-image">
+        <img src="{{ settings.page_banner_login | img_url: 'master' }}" alt="{{ settings.page_banner_login.alt }}" />
+      </div>
+    </div>
+    
+    <div class="login-block login-block-info">
+
+      <div class="login-sub-block login">
+        <header class="section-header">
+          <h2 class="section-header__title">{{ 'customer.login.title' | t }}</h2>
+        </header>
+
+        <div class="note note--success hide" id="ResetSuccess">
+          {{ 'customer.recover_password.success' | t }}
+        </div>
+        
+        <div id="CustomerLoginForm" class="form-vertical">
+          {% form 'customer_login' %}
+
+          {{ form.errors | default_errors }}
+
+          <input type="email" name="customer[email]" id="CustomerEmail" placeholder="{{ 'customer.login.email' | t }}" class="input-full{% if form.errors contains 'email' %} error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+
+          {% if form.password_needed %}
+          <input type="password" value="" name="customer[password]" id="CustomerPassword" placeholder="{{ 'customer.login.password' | t }}" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
+          {% endif %}
+
+          <button type="submit" class="btn">
+            {{ 'customer.login.sign_in' | t }}
+          </button>
+
+          {% if form.password_needed %}
+          <div class="recover-password-button">
+            <a href="#recover" id="RecoverPassword" class="js-no-transition">
+              {{ 'customer.login.forgot_password' | t }}
+            </a>
+          </div>
+          {% endif %}
+          
+          {% comment %}{{ 'layout.customer.create_account' | t | customer_register_link }}{% endcomment %}
+
+          {% endform %}
+        </div>
+
+        <div id="RecoverPasswordForm" class="password-recover hide">
+          <h3>{{ 'customer.recover_password.title' | t }}</h2>
+
+          <div class="form-vertical">
+
+            <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+            {% form 'recover_customer_password' %}
+
+            {{ form.errors | default_errors }}
+
+            {% if form.posted_successfully? %}
+            <span class="hide reset-password-success"></span>
+            {% endif %}
+
+            <input type="email" value="" name="email" id="RecoverEmail" placeholder="{{ 'customer.recover_password.email' | t }}" class="input-full" autocorrect="off" autocapitalize="off">
+
+            <button type="submit" class="btn">
+              {{ 'customer.recover_password.submit' | t }}
+            </button>
+
+            <div class="hide-recover-password" >
+              <button type="button"id="HideRecoverPasswordLink">{{ 'customer.recover_password.cancel' | t }}</button>
+            </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      {% if shop.checkout.guest_login %}
+      <div class="login-sub-block guest">
+        <header class="section-header">
+          <h2 class="section-header__title">{{ 'customer.login.guest_title' | t }}</h2>
+        </header>
+        
+        {% form 'guest_login' %}
+        <button type="submit" class="btn">
+          {{ 'customer.login.guest_continue' | t }}
+        </button>
+        {% endform %}
+      </div>
+      {% endif %}
+      
+      <div class="login-sub-block register">
+        <header class="section-header">
+          <h2 class="section-header__title">{{ 'customer.register.title' | t }}</h2>
+        </header>
+        
+        <div class="form-vertical">
+          {% form 'create_customer' %}
+
+          {{ form.errors | default_errors }}
+
+          <input type="text" name="customer[first_name]" id="FirstName" placeholder="{{ 'customer.register.first_name' | t }}" class="input-full name" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+
+          <input type="text" name="customer[last_name]" id="LastName" placeholder="{{ 'customer.register.last_name' | t }}" class="input-full last-name" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+
+          <input type="email" name="customer[email]" id="Email" placeholder="{{ 'customer.register.email' | t }}" class="input-full{% if form.errors contains 'email' %} error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+
+          <input type="password" name="customer[password]" id="CreatePassword" placeholder="{{ 'customer.register.password' | t }}" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
+
+          <button type="submit" class="btn">
+            {{ 'customer.register.submit' | t }}
+          </button>
+          {% endform %}
+        </div>
+        
+        <p class="login-terms">{{ 'naturadika.login_terms_conditions' | t }}</p>
+      </div>     
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+development:
+  password: shptka_e29a391dc6b3b704a807a69e08df5e5b
+  theme_id: '125894131746'
+  store: naturadika.myshopify.com
+  ignore_files:
+    - config/settings_data.json
+    - /\.(txt|gif|bat)$/
+    - '*.liquid___jb_tmp___'
+    - '*.liquid___jb_old___'

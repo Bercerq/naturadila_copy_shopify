@@ -1,0 +1,111 @@
+{% style %}
+  .newsletter-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+	{% if section.settings.background_image %}
+	background-image: url('{{ section.settings.background_image | img_url: 'master' }}');
+	height: {{ section.settings.background_height }};     
+	{% endif %}
+	color: {{ section.settings.color_text }};
+	
+  }
+  .newsletter-{{ section.id }} .newsletter-block-width {
+    background-color: {{ section.settings.color_background }};
+  }
+
+  .newsletter-{{ section.id }} .newsletter__input::-webkit-input-placeholder { color: {{ section.settings.color_text }}; }
+  .newsletter-{{ section.id }} .newsletter__input::-moz-placeholder { color: {{ section.settings.color_text }}; }
+  .newsletter-{{ section.id }} .newsletter__input::-ms-input-placeholder { color: {{ section.settings.color_text }}; }
+{% endstyle %}
+
+<div class="newsletter-section newsletter-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} newsletter-section--with-divider{% endif %}{% if section.settings.background_height == 'auto' %} newsletter-section--auto-height{% endif %}">
+  <div class="page-width">
+    <div class="text">
+      {% if section.settings.title != blank %}
+        <strong class="title">{{ section.settings.title | escape }}</strong>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <span class="sub-title">{{ section.settings.text }}</span>
+      {% endif %}
+    </div>
+    {% include 'newsletter-form', section_id: section.id, snippet_context: 'section' %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Newsletter",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Customers who subscribe will have their email address added to the 'accepts marketing' [customer list](/admin/customers?query=&accepts_marketing=1)."
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Sign up and save"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Subheading",
+        "default": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#f9f9f9"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#1c1d1d"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Photo image"
+      },
+      {
+        "type": "select",
+        "id": "background_height",
+        "label": "Desktop height",
+        "default": "580px",
+        "options": [
+          {
+            "label": "Auto",
+            "value": "auto"
+          },
+          {
+            "label": "400px",
+            "value": "400px"
+          },
+          {
+            "label": "450px",
+            "value": "450px"
+          },
+          {
+            "label": "500px",
+            "value": "500px"
+          },
+          {
+            "label": "580px",
+            "value": "580px"
+          },
+          {
+            "label": "650",
+            "value": "650px"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Newsletter",
+        "category": "Promotional"
+      }
+    ]
+  }
+{% endschema %}

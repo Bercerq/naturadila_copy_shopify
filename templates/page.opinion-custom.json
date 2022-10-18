@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "main": {
+      "type": "opinion-custom",
+      "settings": {}
+    },
+    "6879668a-bebb-4733-a168-9eac3369b3d2": {
+      "type": "opinion-banner",
+      "settings": {
+        "pt": 1,
+        "pb": 1,
+        "title": "DESCUBRE QUÉ OPINAN NUESTROS CLIENTES DE NOSOTROS",
+        "subtitle": "Más de 1.600 reseñas que nos otorgan nada más y nada menos que una valoración de 4,8\/5⭐",
+        "text-btn": "VER TODAS LAS OPINIONES",
+        "link-btn": "",
+        "bg-desktop": "shopify:\/\/shop_images\/Rectangle_84.png",
+        "bg-mobile": "shopify:\/\/shop_images\/Component_1.png"
+      }
+    },
+    "0ffd3634-3a8e-4a31-b94e-2d11fcaffbb4": {
+      "type": "opinion-swipper",
+      "blocks": {
+        "e0320950-4f6b-4a9b-9c64-437a756924de": {
+          "type": "review",
+          "settings": {
+            "title": "Magrifit Detox",
+            "label": "Compra verificada",
+            "date": "",
+            "rating": 100,
+            "review": "Ya los conocía, bueno todo"
+          }
+        },
+        "c6ac564a-490c-441b-9f17-1ec7031c60c0": {
+          "type": "review",
+          "settings": {
+            "title": "Viboost Tribulus + Maca",
+            "label": "Compra verificada",
+            "date": "",
+            "rating": 100,
+            "review": ""
+          }
+        },
+        "7b66cb48-05fd-4f3c-95c2-aa1c61a80bbf": {
+          "type": "review",
+          "settings": {
+            "title": "Piper Nigrum Strong",
+            "label": "Compra verificada",
+            "date": "",
+            "rating": 100,
+            "review": "lo pedí y el día siguiente ya lo tenía, alucinante, nunca me había llegado más rápido un paquete"
+          }
+        },
+        "ab0b1a7f-e62f-41ba-8008-c8baae1cd302": {
+          "type": "review",
+          "settings": {
+            "title": "Magrifit Detox",
+            "label": "Compra verificada",
+            "date": "",
+            "rating": 100,
+            "review": "Ya los conocía, bueno todo"
+          }
+        }
+      },
+      "block_order": [
+        "e0320950-4f6b-4a9b-9c64-437a756924de",
+        "c6ac564a-490c-441b-9f17-1ec7031c60c0",
+        "7b66cb48-05fd-4f3c-95c2-aa1c61a80bbf",
+        "ab0b1a7f-e62f-41ba-8008-c8baae1cd302"
+      ],
+      "settings": {
+        "divider": false,
+        "title": "Últimas reseñas"
+      }
+    },
+    "dd8a1ab0-5a38-4165-9fda-45baca359434": {
+      "type": "opinion-video",
+      "blocks": {
+        "8d9f2fdd-3202-4af4-a4b0-60fc2bd5cdab": {
+          "type": "video",
+          "settings": {
+            "video": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/942137385dc64da79dd936fbcaf4a96c.mp4",
+            "poster": "shopify:\/\/shop_images\/Component_1_6d673bbf-d5ca-4499-a8c4-b330611bcc8a.png"
+          }
+        },
+        "af7241dc-9566-46b1-ac45-dae11d93a71a": {
+          "type": "video",
+          "settings": {
+            "video": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/145d3526ae174f6da7203c3a73b690d5.mp4",
+            "poster": "shopify:\/\/shop_images\/Component_2.png"
+          }
+        },
+        "7d6dd7c5-1bdd-4d8d-879b-b9c74491ab20": {
+          "type": "video",
+          "settings": {
+            "video": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/d6a3fdaac4ce412e9dbb5aa0c3aca0bd.mp4",
+            "poster": "shopify:\/\/shop_images\/Component_3.png"
+          }
+        }
+      },
+      "block_order": [
+        "8d9f2fdd-3202-4af4-a4b0-60fc2bd5cdab",
+        "af7241dc-9566-46b1-ac45-dae11d93a71a",
+        "7d6dd7c5-1bdd-4d8d-879b-b9c74491ab20"
+      ],
+      "settings": {
+        "pt": 40,
+        "pb": 40,
+        "title": "Y como a veces es mejor verlo que leerlo…\n<p>descubre los testimonios de nuestros clientes<\/p>"
+      }
+    },
+    "bfbe78de-6c85-45a7-826f-021fa324223b": {
+      "type": "opinion-review",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "6879668a-bebb-4733-a168-9eac3369b3d2",
+    "0ffd3634-3a8e-4a31-b94e-2d11fcaffbb4",
+    "dd8a1ab0-5a38-4165-9fda-45baca359434",
+    "bfbe78de-6c85-45a7-826f-021fa324223b"
+  ]
+}

@@ -1,0 +1,35 @@
+{%- if product.metafields.faq != blank -%}
+
+{%- assign number_of_faqs = product.metafields.faq.size | divided_by: 2 -%}
+<!--JSON-LD Product FAQPage-->
+<script type="application/ld+json">
+{
+	"@context":"https://schema.org",
+	"@type":"FAQPage",
+	"mainEntity":[
+    
+    {%- for i in (1..10) -%}
+    {%- capture question -%}question_{{ forloop.index }}{%- endcapture -%}
+    {%- capture answer -%}answer_{{ forloop.index }}{%- endcapture -%}
+    
+    {%- if product.metafields.faq[question] and product.metafields.faq[answer] -%}
+    	
+        {
+          "@type":"Question",
+          "name":"{{ product.metafields.faq[question] }}",
+          "acceptedAnswer":
+          {
+              "@type":"Answer",
+              "text":"{{ product.metafields.faq[answer] }}"
+          }
+		}
+        {%- if forloop.index < number_of_faqs -%}
+        ,
+        {%- endif -%}
+    {%- endif -%}
+    {%- endfor -%}
+    
+    ]
+}
+</script>
+{%- endif -%}

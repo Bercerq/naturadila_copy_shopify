@@ -1,0 +1,18 @@
+<div class="grid__item grid-product {{ grid_item_width }} collection-box" data-aos="row-of-{{ per_row }}">
+  <div class="module-breadcrumb">  
+    <a class="module-breadcrumbs-link" href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a><span class="module-breadcrumbs-divider">/</span>
+    {%- if current_tags -%}
+    	<a class="module-breadcrumbs-link"  href="/collections/{{ collection.handle }}">{{ collection.title }}</a><span class="module-breadcrumbs-divider">/</span> <span>{{ current_tags.first }}</span>
+    {%- elsif collection.handle == 'all' -%}
+      <span>{{ 'general.breadcrumbs.all_products' | t }}</span>
+    {%- else -%}
+      <span>{{ collection.title }}</span>
+    {%- endif -%}
+  </div>
+  {%- if collection.metafields.custom.title -%}
+  	<h1 class="collection-box-title">{{ collection.metafields.custom.title }}</h1>
+  {%- else -%}
+  	<h1 class="collection-box-title">{{ collection.title }}</h1>
+  {%- endif -%}
+  <div class="collection-box-description">{{ collection.description }}</div>
+</div>

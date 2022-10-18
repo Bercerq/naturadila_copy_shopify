@@ -1,0 +1,44 @@
+{%- assign blockId = block.id -%}
+{% if product %}
+  {%- assign blockId = block.id | append: product.id -%}
+{% endif %}
+
+<div class="index-section">
+
+  {% if block.settings.title != blank %}
+    <div class="section-header">
+      <h2 class="section-header__title">
+        {{ block.settings.title }}
+      </h2>
+    </div>
+  {% endif %}
+
+  <div class="form-vertical">
+    {% form 'contact' %}
+
+    {% if form.posted_successfully? %}
+      <p class="note note--success">
+        {{ 'contact.form.post_success' | t }}
+      </p>
+    {% endif %}
+
+    {{ form.errors | default_errors }}
+
+    <input type="text" id="ContactFormName-{{ blockId }}" class="input-full" name="contact[name]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+
+    <input type="email" id="ContactFormEmail-{{ blockId }}" class="input-full" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+
+    {% if block.settings.show_phone %}
+    	<input type="tel" id="ContactFormPhone-{{ blockId }}" class="input-full" name="contact[phone]" placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+    {% endif %}
+
+    <textarea rows="10" id="ContactFormMessage-{{ blockId }}" class="input-full" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+    <button type="submit" class="btn">
+      {{ 'contact.form.send' | t }}
+    </button>
+
+    {% endform %}
+  </div>
+</div>
+

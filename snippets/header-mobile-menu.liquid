@@ -1,0 +1,102 @@
+<div class="mobile-menu">
+  <div class="menu-overlay"></div>
+  <div class="mobile-menu-opener">
+    <span class="menu-opener-fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+  </div>
+  <div class="mobile-menu-link-list">
+    <ul class="mobile-menu-main-list">
+      {% for link in main_menu.links %}
+        <li class="primary-link">
+          {% case link.url %}
+            {% when '/pages/somos-naturadika' %}
+              <span class="mobile-menu-link obfuscated-anchor{% if link.active or link.child_active %} active{% endif %}{% if link.links != blank %} with-sublist{% endif %}" data-link="L3BhZ2VzL3NvbW9zLW5hdHVyYWRpa2E=">
+                {{ link.title }}
+              </span>
+
+            {% when '/pages/press' %}
+              <span class="mobile-menu-link obfuscated-anchor{% if link.active or link.child_active %} active{% endif %}{% if link.links != blank %} with-sublist{% endif %}" data-link="L3BhZ2VzL3ByZXNz">
+                {{ link.title }}
+              </span>
+
+            {% when '/collections/shop' %}
+              <span class="mobile-menu-link obfuscated-anchor{% if link.active or link.child_active %} active{% endif %}{% if link.links != blank %} with-sublist{% endif %}" data-link="L2NvbGxlY3Rpb25zL3Nob3A=">
+                {{ link.title }}
+              </span>
+
+            {% else %}
+              <a class="etst mobile-menu-link{% if link.active or link.child_active %} active{% endif %}{% if link.links != blank %} with-sublist{% endif %}" href="{{ link.url }}">
+                {{ link.title }}
+              </a>
+          {% endcase %}
+
+          {% if link.links != blank %}
+            <div class="mobile-menu-link-sublist">
+              <div class="mobile-menu-toggle-opener"></div>
+              <ul class="mobile-menu-toggle">
+                {% for childlink in link.links %}
+                <li>
+                  <a class="mobile-menu-link{% if childlink.active or childlink.child_active %} active{% endif %}{% if childlink.links != blank %} with-sublist{% endif %}" href="{{ childlink.url }}">
+                    {{ childlink.title | escape }}
+                  </a>
+
+                  {% if childlink.type == "product_link" %}
+                    <div class="product-menu-meta-desc">{{ childlink.object.metafields.content.product_menu_desc_item }}</div>
+                  {% endif %}
+
+                  {% if childlink.links != blank %}
+                  <div class="mobile-menu-link-inner-sublist">
+                    <div class="mobile-menu-toggle-opener"></div>
+                    <ul class="mobile-menu-toggle">
+                      {% for grandchildlink in childlink.links %}
+                      <li>
+                        <a class="mobile-menu-link{% if grandchildlink.active %} active{% endif %}" href="{{ grandchildlink.url }}">
+                          {{ grandchildlink.title }}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+      
+      {% for elem in burger_menu.links %}
+      <li class="secondary-link">
+        <a href="{{elem.url}}">{{elem.title}}</a>
+      </li>
+        
+      {% endfor %}
+      {%- comment -%}
+      <li class="secondary-link">
+        <a href="#">El Blog Interesante</a>
+      </li>
+      <li class="secondary-link">
+        <a href="#">FAQ</a>
+      </li>
+      <li class="secondary-link">
+        <a href="#">Somos Naturadika</a>
+      </li>
+      <li class="secondary-link">
+        <a href="#">Contacto</a>
+      </li>
+      {%- endcomment -%}
+      
+      {% if shop.customer_accounts_enabled %}
+        <li class="secondary-link">
+          <span class="my-account obfuscated-anchor" data-link="L2FjY291bnQ=">
+            {% if customer %}
+            {{ 'layout.customer.account' | t }}
+            {% else %}
+            {{ 'layout.customer.log_in' | t }}
+            {% endif %}
+          </span>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

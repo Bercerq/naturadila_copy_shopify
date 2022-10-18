@@ -1,0 +1,613 @@
+.icart.icart-curve .icart-main .icart-slider-drawer.icart-inner {
+    margin: 20px;
+    width: 460px;
+}
+
+.icart-header {
+    padding: 20px 30px 10px 30px;
+}
+
+.icart-header .icart-header-title {
+    margin: 0;
+}
+
+.icart .icart-main .icart-justify-content {
+    justify-content: flex-end;
+    position: relative;
+}
+
+.icart .icart-main .icart-plr-comman {
+    padding: 0 30px;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-items .icart-item-img {
+    min-width: 84px;
+    min-height: 84px;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-list .icart-items .icart-item-img img {
+    min-height: 84px;
+    min-width: 84px;
+    border-radius: 8px;
+}
+
+.icart .icart-inner .icart-plus:before,
+.icart .icart-inner .icart-minus:before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+.icart .icart-inner .icart-plus:before {
+    top: 45%;
+}
+
+.icart .icart-inner .icart-minus:before {
+    content: '';
+    width: 10px;
+    height: 1px;
+    background-color: #868489;
+}
+
+.icart .icart-inner .icart-plus:before {
+    content: '+';
+    font-size: 20px;
+}
+
+.icart-main .icart-item-content p {
+    font-weight: 400;
+    font-size: 17px !important;
+    line-height: 150%;
+}
+
+.icart .icart-item-content span.icart-vendor-title {
+    font-weight: 400;
+    font-size: 15px !important;
+    line-height: 120%;
+    color: #666666;
+}
+
+.icart .icart-item-content a {
+    margin-bottom: 3px;
+}
+
+.icart .icart-main .icart-vendor-title {
+    font-weight: 400;
+}
+
+
+.icart .icart-main .icart-quantity.icart-buttons-added {
+    height: 24px !important;
+}
+
+.icart .icart-item-quantity {
+    width: 22%;
+}
+
+.icart .icart-inner .icart-qty-input.icart-plus,
+.icart .icart-inner .icart-qty-input.icart-minus {
+    position: relative;
+}
+
+.icartContain {
+    display: flex;
+    flex-direction: column;
+}
+
+.icart div {
+    order: 3;
+}
+
+.icart .icart-pg-progress-bar-widget {
+    order: 1;
+}
+
+.icart-freeshipping-bar {
+    padding: 10px 0 15px;
+}
+
+.icart .icart-cart-items-block {
+    order: 2;
+    padding-bottom: 10px;
+}
+
+.icart .icart-content-title {
+    padding: 15px 0 10px 0;
+    margin: 0 30px;
+    position: relative;
+}
+
+.icart .icart-content-title::before,
+.icart .icart-content-title::after {
+    content: '';
+    display: block;
+
+    width: 30px;
+    height: 100%;
+
+    position: absolute;
+    left: -30px;
+    top: 0;
+
+    background: rgb(248, 248, 248);
+}
+
+.icart .icart-content-title::after {
+    left: auto;
+    right: -30px;
+}
+
+
+.icart .icart-main p br {
+    display: none;
+}
+
+.icart-checkout-block {
+    padding-bottom: 30px;
+}
+
+.icart.icart-curve .icart-content {
+    height: calc(100vh - 40px)
+}
+
+.icart-top-progress-bar {
+    padding: 0 30px;
+    background: #F8F8F8;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-shipping-bar {
+    height: 6px;
+}
+
+button.icart-close-btn {
+    top: 35px;
+    right: 22px;
+    opacity: 1;
+    color: #000000 !important;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.icart .icart-main .icart-cart-item-mt {
+    justify-content: flex-end;
+
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+
+.icart .icart-cart-qty-box {
+    position: absolute;
+    right: 0;
+}
+
+.icart-add-cart-btn {
+    position: absolute;
+    right: 0;
+}
+
+.icart .icart-main .icart-pall-comman {
+    padding: 0 30px;
+}
+
+.icart .icart-product-price,
+.icart .icart-main .icart-inner .icart-cart-main .icart-content span.icart-product-compare-price {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 150%;
+    text-align: right;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-checkout label {
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 176%;
+}
+
+.icart-cart-items-block .icart-new-box {
+    border-bottom: none !important;
+}
+
+.icart-cart-items-block .icart-new-box:last-child {
+    border-bottom: none !important;
+}
+
+.icart-cart-items-block .icart-new-box.icart-clr-all {
+    border-bottom: none !important;
+}
+
+.icart-cart-items-block .icart-new-box.icart-border-bottam-new {
+    border-bottom: none !important;
+}
+
+.icart-new-box.icart-border-bottam-new {
+    border-bottom: none !important;
+}
+
+.icart .icart-special-offer-message {
+    margin: 0;
+}
+
+.icart-top-progress-bar .icart-freeshipping-bar p {
+    padding: 8px 0;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-list {
+    padding: 15px 0 0 0;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-checkout-block .icart-checkout {
+    background: transparent;
+    border-radius: 22px;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+}
+
+.icart .icart-main .icart-slider-drawer.icart-inner .icart-checkout-btn.icart-font-full button {
+    height: auto;
+    padding: 0;
+}
+
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-product-upsell .icart-item-price span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 175%;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-checkout-block .icart-checkout-btn {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 26px;
+    color: #FFFFFF;
+    border-radius: 22px !important;
+}
+
+.icartCheckoutBtnGroup {
+    width: 100%;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-checkout.icartCartSubTotalContain {
+    border-top: 1px solid #CCCCCC;
+}
+
+.icart .icart-item-price {
+    justify-content: flex-end;
+}
+
+.icart .icart-main .icart-pall-comman::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 100%;
+    background-color: #F8F8F8;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.icart .icart-main .icart-pall-comman::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 100%;
+    background-color: #F8F8F8;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.icart-product-upsell-block .icart-content-title {
+    position: relative;
+}
+
+.icart-product-upsell-block .icart-content-title::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 100%;
+    background-color: #F8F8F8;
+
+    position: absolute;
+    left: -30px;
+    top: 0;
+}
+
+.icart-product-upsell-block .icart-content-title::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 100%;
+    background-color: #F8F8F8;
+
+    position: absolute;
+    right: -30px;
+    top: 0;
+}
+
+.icart .icart-item-price {
+    flex-wrap: nowrap;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-product-upsell .icart-item-price span.icart-product-compare-price {
+    font-weight: 600 !important;
+    color: #000 !important;
+}
+
+.icart-product-compare-price {
+    color: #000 !important;
+    text-decoration-color: rgb(255, 0, 0) !important;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-item-content select {
+    border: 1px solid #CCCCCC !important;
+    border-radius: 6px !important;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px !important;
+    line-height: 20px;
+    padding-left: 8px !important;
+
+    display: flex;
+    align-items: center;
+    text-align: left;
+
+    color: #000000 !important;
+}
+
+.icart .icart-main .icart-slider-drawer .icart-quantity.icart-buttons-added {
+    width: 80px;
+}
+
+.icart .icart-inner .icart-minus:before {
+    width: 8px;
+}
+
+.icart .icart-inner .icart-plus:before {
+    width: 8px;
+}
+
+.icart .icart-inner .icart-plus:after {
+    width: 8px;
+    top: 10.5px;
+    left: 8px;
+}
+
+.icart .icart-add-cart-btn {
+    width: 110px;
+}
+
+.icart .icart-variants-section {
+    margin-top: 12px;
+}
+
+.icart-special-offer-message p strong > span {
+    font-weight: bold;
+}
+
+.icart .icart-coupon-code .icart-discount-code input {
+    border-radius: 5px;
+    height: 30px;
+    border-width: 1px;
+}
+
+.icart .icart-coupon-code .icart-discount-code input,
+.icart .icart-coupon-code .icart-discount-code input::placeholder {
+    font-size: 13px;
+}
+
+.icart .icart-coupon-code .icart-discount-code input::placeholder {
+    color: #333333
+}
+
+.icart .icart-main .icart-slider-drawer.icart-inner .icart-checkout button {
+    border-radius: 20px;
+    width: 109px;
+    height: 30px;
+    margin-left: 20px;
+}
+
+.icart .icart-main .icart-inner .icart-cart-main .icart-item-content select {
+    padding: 2px 31px 2px 8px;
+}
+
+.icart .icart-border-bottam-new .icart-item-content p {
+    height: auto;
+}
+
+.icart .icart-border-bottam-new .icart-item-content a {
+    font-weight: 700;
+    font-size: 12px !important;
+    overflow: unset;
+    line-height: 18px;
+    height: auto;
+}
+
+.icart .icart-main .icart-vendor-title, .icart-main .icart-item-content p, .icart .icart-item-content a {
+    width: 165px;
+}
+
+@media (max-width: 767px) {
+    .icart.icart-curve .icart-main .icart-slider-drawer.icart-inner {
+        height: calc(100% - 40px);
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .icart.icart-curve .icart-main .icart-slider-drawer.icart-inner {
+        height: auto !important;
+    }
+
+    .icart.icart-curve .icart-main .icart-slider-drawer.icart-inner {
+        width: calc(100% - 20px);
+        margin: 20px 10px;
+    }
+
+    .icart .icart-main .icart-pall-comman {
+        padding: 0 10px;
+        position: relative;
+    }
+
+    .icart .icart-main .icart-pall-comman::before {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 100%;
+        background-color: #F8F8F8;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .icart .icart-main .icart-pall-comman::after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 100%;
+        background-color: #F8F8F8;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .icart-product-upsell-block .icart-content-title {
+        position: relative;
+    }
+
+    .icart-product-upsell-block .icart-content-title::before {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 100%;
+        background-color: #F8F8F8;
+
+        position: absolute;
+        left: -10px;
+        top: 0;
+    }
+
+    .icart-product-upsell-block .icart-content-title::after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 100%;
+        background-color: #F8F8F8;
+
+        position: absolute;
+        right: -10px;
+        top: 0;
+    }
+
+    .icart-header {
+        padding: 15px 10px 10px;
+    }
+
+    .icart .icart-main .icart-plr-comman {
+        padding: 0 10px;
+    }
+
+    .icartContain {
+        padding-bottom: 0 !important;
+    }
+
+    .icart .icart-content-title {
+        margin: 0 10px;
+    }
+
+    .icart .icart-item-quantity {
+        width: 28%;
+    }
+
+    .icart .icart-inner .icart-minus:before {
+        width: 7px;
+    }
+
+    .icart-main .icart-item-content p {
+        font-size: 14px !important;
+    }
+
+    .icart .icart-product-price, .icart .icart-main .icart-inner .icart-cart-main .icart-content span.icart-product-compare-price {
+        font-size: 14px;
+    }
+
+    .icart .icart-item-content span.icart-vendor-title {
+        font-size: 12px !important;
+    }
+
+    .icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-checkout label {
+        font-size: 14px !important;
+    }
+
+    button.icart-close-btn {
+        top: 32px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 389px) {
+    .icart .icart-border-bottam-new .icart-item-content p {
+        overflow: hidden;
+    }
+
+    .icart .icart-border-bottam-new .icart-item-content a {
+        height: 35px;
+    }
+
+    .icart .icart-border-bottam-new .icart-add-cart-btn {
+        bottom: 0;
+    }
+
+    .icart .icart-item-price {
+        flex-direction: column;
+    }
+
+    .icart .icart-product-price, .icart .icart-main .icart-inner .icart-cart-main .icart-content span.icart-product-compare-price {
+        line-height: 110%;
+    }
+
+    .icart .icart-main .icart-cart-item-mt {
+        justify-content: flex-end;
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
+
+    .icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-items .icart-item-img,
+    .icart .icart-main .icart-inner .icart-cart-main .icart-content .icart-list .icart-items .icart-item-img img {
+        min-height: 65px;
+        min-width: 65px;
+    }
+}
+
+@media (max-width: 350px) {
+    .icart .icart-main .icart-vendor-title, .icart-main .icart-item-content p, .icart .icart-item-content a {
+        width: auto;
+        height: auto;
+    }
+
+    .icart .icart-add-cart-btn {
+        width: 80px;
+    }
+
+    .icart .icart-cart-qty-box, .icart-add-cart-btn {
+        bottom: 0;
+    }
+
+    .icart .icart-item-content a {
+        line-height: 21px;
+    }
+}

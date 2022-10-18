@@ -1,0 +1,394 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Ir directamente al contenido",
+      "close_modal": "Cerrar (esc)",
+      "close": "Cerrar",
+      "learn_more": "Aprende más"
+    },
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "404": {
+      "title": "404 Página no encontrada",
+      "subtext_html": "La página que has solicitado no existe. Haz clic <a href='{{ url }}'>aquí<\/a> para continuar la compra."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente"
+    },
+    "password_page": {
+      "login_form_heading": "Entra a la tienda usando contraseña:",
+      "login_form_password_label": "Contraseña",
+      "login_form_password_placeholder": "Tu contraseña",
+      "login_form_submit": "Entra",
+      "signup_form_email_label": "Correo Electrónico",
+      "signup_form_success": "¡Te enviaremos un correo electrónico antes de comenzar!",
+      "admin_link_html": "¿Eres el dueño de la tienda? <a href=\"\/admin\" class=\"text-link\">Regístrate aquí<\/a>",
+      "password_link": "Entrar usando contraseña",
+      "powered_by_shopify_html": "Esta tienda estará impulsada por {{ shopify }}"
+    },
+    "breadcrumbs": {
+      "home": "Inicio",
+      "home_link_title": "Volver a la portada",
+      "all_products": "Shop"
+    },
+    "social": {
+      "share_on_facebook": "Compartir",
+      "share_on_twitter": "Tuitear",
+      "share_on_pinterest": "Hacer pin",
+      "alt_text": {
+        "share_on_facebook": "Compartir en Facebook",
+        "share_on_twitter": "Tuitear en Twitter",
+        "share_on_pinterest": "Pinear en Pinterest"
+      }
+    },
+    "newsletter_form": {
+      "newsletter_email": "Tu e-mail",
+      "newsletter_confirmation": "¡Gracias por suscribirte!",
+      "submit": "Suscríbete"
+    },
+    "search": {
+      "view_more": "Ver más",
+      "pages": "Páginas:",
+      "articles": "Artículos:",
+      "no_results_html": "Tu búsqueda de \"{{ terms }}\" no obtuvo resultados.",
+      "results_for_html": "Tu búsqueda de \"{{ terms }}\" ha encontrado lo siguiente:",
+      "title": "Buscar",
+      "placeholder": "Buscar en nuestra tienda",
+      "submit": "Buscar",
+      "result_count": {
+        "one": "{{ count }} resultado",
+        "other": "{{ count }} resultados"
+      }
+    },
+    "drawers": {
+      "navigation": "Navegación",
+      "close_menu": "Cerrar menú",
+      "expand_submenu": "Expandir menú",
+      "collapse_submenu": "Minimizar menú"
+    },
+    "cart_drawer": {
+      "drawer_info_title": "¿POR QUÉ CONFIAR EN NATURADIKA?",
+      "feature_1_title": "COMPRA SEGURA",
+      "feature_1_text": "Tecnología SSL y Pago Cifrado",
+      "feature_2_title": "DEVOLUCIÓN GRATIS",
+      "feature_2_text": "Tienes 30 días para devolver",
+      "feature_3_title": "ENTREGA GRATIS",
+      "feature_3_text": "Envío rápido y gratis siempre"
+    },
+    "currency": {
+      "dropdown_label": "Moneda"
+    },
+    "language": {
+      "dropdown_label": "Idioma"
+    }
+  },
+  "sections": {
+    "map": {
+      "get_directions": "Obtener las direcciones",
+      "address_error": "No se puede encontrar esa dirección",
+      "address_no_results": "No results for that address",
+      "address_query_limit_html": "Se ha excedido el límite de uso de la API de Google . Considere la posibilidad de actualizar a un <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Plan Premium<\/a>.",
+      "auth_error_html": "Hubo un problema de autenticación con su cuenta de Google Maps. Crear y habilitar la <a href=\"https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\">API de JavaScript<\/a> y <a href=\"https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\">API de geocodificación<\/a> permiso para su aplicación."
+    }
+  },
+  "blogs": {
+    "article": {
+      "view_all": "Ver todo",
+      "tags": "Etiquetas",
+      "read_more": "Leer más",
+      "back_to_blog": "Volver a {{ title }}",
+      "more_info": "Más info"
+    },
+    "comments": {
+      "title": "Deja un comentario",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "post": "Publica tu comentario",
+      "moderated": "Por favor ten en cuenta que los comentarios deben ser aprobados antes de ser publicados",
+      "success_moderated": "Tu comentario se ha compartido con éxito. Dado que nuestro blog es moderado, lo publicaremos en breve.",
+      "success": "¡Tu comentario se ha compartido con éxito! ¡Gracias!",
+      "with_count": {
+        "one": "{{ count }} comentario",
+        "other": "{{ count }} comentarios"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Carrito",
+      "remove": "Quitar",
+      "note": "Instrucciones especiales para el vendedor",
+      "subtotal": "Subtotal",
+      "discounts": "Descuentos",
+      "shipping_at_checkout": "Podrás añadir tus códigos de descuento durante el pago.",
+      "shipping_info": "Envío Gratis",
+      "shipping_type": "Siempre",
+      "update": "Actualizar carrito",
+      "checkout": "Pagar de forma segura",
+      "empty": "Tu carrito actualmente está vacío.",
+      "continue_browsing_html": "Continúa explorando <a href='{{ url }}'>aquí<\/a>.",
+      "close_cart": "Cerrar carrito",
+      "reduce_quantity": "Quitar uno a la cantidad de artículos",
+      "increase_quantity": "Aumentar uno a la cantidad de artículos",
+      "terms": "Acepto los términos y condiciones",
+      "terms_html": "Acepto los <a href='{{ url }}' target='_blank'>términos y condiciones<\/a>",
+      "terms_confirm": "Debe aceptar los términos y condiciones de venta para pagar"
+    },
+    "label": {
+      "price": "Precio",
+      "quantity": "Cantidad",
+      "total": "Total"
+    }
+  },
+  "collections": {
+    "general": {
+      "catalog_title": "Catálogo",
+      "all_of_collection": "Todos",
+      "view_all_products_html": "ver los<br>{{ count }} productos",
+      "see_more": "Mostrar más",
+      "see_less": "Muestra menos",
+      "no_matches": "Lo sentimos, no hay productos que coincidan con tu búsqueda.",
+      "items_with_count": {
+        "one": "{{ count }} artículo",
+        "other": "{{ count }} artículos"
+      }
+    },
+    "sorting": {
+      "title": "Ordenar"
+    },
+    "filters": {
+      "title_tags": "Filtrar",
+      "all_tags": "Todos los productos",
+      "categories_title": "Categorías"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "phone": "Número de teléfono",
+      "message": "Mensaje",
+      "send": "Enviar",
+      "post_success": "Gracias por contactarnos. Te responderemos lo antes posible."
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mi cuenta",
+      "details": "Detalles de la cuenta",
+      "view_addresses": "Ver direcciones",
+      "return": "Volver a detalles de la cuenta"
+    },
+    "activate_account": {
+      "title": "Activar cuenta",
+      "subtext": "Crea tu contraseña para activar tu cuenta.",
+      "password": "Contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Activar cuenta",
+      "cancel": "Rechazar invitación"
+    },
+    "addresses": {
+      "title": "Tus direcciones",
+      "default": "Por defecto",
+      "add_new": "Agregar una nueva dirección",
+      "edit_address": "Editar dirección",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "company": "Empresa",
+      "address1": "Dirección1",
+      "address2": "Dirección2",
+      "city": "Ciudad",
+      "country": "País",
+      "province": "Provincia",
+      "zip": "Código postal",
+      "phone": "Teléfono",
+      "set_default": "Fijar como dirección por defecto",
+      "add": "Agregar dirección",
+      "update": "Actualizar dirección",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "delete_confirm": "¿Estás seguro de que deseas eliminar esta dirección?"
+    },
+    "login": {
+      "title": "Mi Cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Has olvidado tu contraseña?",
+      "sign_in": "Iniciar Sesión",
+      "cancel": "Volver a la tienda",
+      "guest_title": "Continuar como invitado",
+      "guest_continue": "Continuar"
+    },
+    "orders": {
+      "title": "Historial de pedidos",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "payment_status": "Estado del pago",
+      "fulfillment_status": "Estado del pedido",
+      "total": "Total",
+      "none": "Todavía nos has realizado ningún pedido."
+    },
+    "order": {
+      "title": "Pedido {{ name }}",
+      "date_html": "Realizado el {{ date }}",
+      "cancelled_html": "Pedido cancelado el {{ date }}",
+      "cancelled_reason": "Motivo: {{ reason }}",
+      "billing_address": "Dirección de facturación",
+      "payment_status": "Estado del pago",
+      "shipping_address": "Dirección de envío",
+      "fulfillment_status": "Estado del pedido",
+      "discount": "Descuento",
+      "shipping": "Envío",
+      "tax": "Impuesto",
+      "product": "Producto",
+      "sku": "SKU",
+      "price": "Precio",
+      "quantity": "Cantidad",
+      "total": "Total",
+      "fulfilled_at_html": "Enviado {{ date }}",
+      "subtotal": "Subtotal"
+    },
+    "recover_password": {
+      "title": "Restablecer tu contraseña",
+      "email": "Correo electrónico",
+      "submit": "Enviar",
+      "cancel": "Cancelar",
+      "subtext": "Te enviaremos un correo electrónico para restablecer tu contraseña.",
+      "success": "Hemos enviado un correo electrónico con un enlace para actualizar tu contraseña."
+    },
+    "reset_password": {
+      "title": "Restablecer contraseña de cuenta",
+      "subtext": "Introduce una nueva contraseña para {{ email }}",
+      "password": "Contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Restablecer contraseña"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Crear",
+      "cancel": "Volver a la tienda"
+    }
+  },
+  "home_page": {
+    "onboarding": {
+      "product_title": "Ejemplo título de producto",
+      "product_description": " Este campo se utiliza para describir los detalles de tu producto. Informa a los clientes acerca de la apariencia, percepción y estilo de tu producto. Incluye detalles sobre el color, los materiales utilizados, el tamaño y donde se hizo.",
+      "collection_title": "Ejemplo título de colección",
+      "no_content": "Esta secção não inclui de momento qualquer conteúdo. Adicione conteúdo a esta secção através da barra lateral."
+    }
+  },
+  "layout": {
+    "cart": {
+      "title": "Mi Carrito",
+      "shipping_finish": "¡Enhorabuena! Ya tienes el",
+      "shipping_finish_strong": "Envío Gratis",
+      "shipping_progress": "para tener Envío Gratis",
+      "klarna_clearpay": "Paga en 3 cuotas SIN intereses con",
+      "checkout": "Paga de Forma Segura",
+      "checkoutTwo": "Añadir",
+      "formOpen": "Añade tu código de descuento",
+      "formClose": "Cierra"
+    },
+    "customer": {
+      "account": "Mi Cuenta",
+      "log_out": "Cerrar sesión",
+      "log_in": "Mi Cuenta",
+      "create_account": "Crear cuenta"
+    },
+    "footer": {
+      "social_platform": "{{ name }} en {{ platform }}"
+    }
+  },
+  "products": {
+    "general": {
+      "save_html": "",
+      "collection_return": "Volver a {{ collection }}",
+      "next_product": "Siguiente: {{ title }}",
+      "sale": "Venta",
+      "sale_price": "Precio de oferta",
+      "regular_price": "Precio habitual",
+      "from_text_html": "De {{ price }}",
+      "recent_products": "Visto recientemente"
+    },
+    "product": {
+      "stock_label": "{{ count }} en stock",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "quantity": "Cantidad",
+      "add_to_cart": "Añadir al carrito",
+      "add_to_cart_alt": "Lo Quiero",
+      "preorder": "Hacer un pedido",
+      "include_taxes": "Impuesto incluido.",
+      "shipping_policy_html": "Los <a href='{{ link }}'>gastos de envío<\/a> se calculan en la pantalla de pagos.",
+      "will_not_ship_until": "Será enviado después {{ date }}",
+      "will_be_in_stock_after": "Estará disponible después {{ date }}",
+      "waiting_for_stock": "Inventario en el camino",
+      "view_in_space": "Ver en tu espacio",
+      "view_in_space_label": "Ver en tu espacio, carga el artículo en la ventana de realidad aumentada",
+      "reviews_title": "OPINIONES REALES DE PERSONAS REALES",
+      "reviews_see_more": "Ver todas las opiniones"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "¡Aquí está tu tarjeta de regalo de {{ value }} para {{ shop }}!",
+      "subtext": "¡Aquí está tu tarjeta de regalo!",
+      "disabled": "Inhabilitada",
+      "expired": "Expiró el {{ expiry }}",
+      "active": "Expira el {{ expiry }}",
+      "redeem": "Usa este código al terminar la compra para canjear tu tarjeta regalo",
+      "shop_link": "Empezar a comprar",
+      "print": "Imprimir",
+      "add_to_apple_wallet": "Añadir a Apple Wallet"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%d de %B, %Y"
+  },
+  "naturadika": {
+    "view_product": "Lo quiero",
+    "welcome": "Bienvenid@",
+    "login_terms_conditions": "Al crear una cuenta, aceptas las condiciones de uso y la política de privacidad.",
+    "go_to_cart": "Ver Carrito",
+    "share": "Comparte",
+    "related_articles": "Más artículos",
+    "article_newsletter_heading": "La newsletter que no enviarás a SPAM",
+    "article_newsletter_subtitle": "Suscríbete y recibirás un 10% de descuento para tu primera compra.",
+    "newsletter_consent": "Al unirte aceptas recibir comunicaciones comerciales de Naturadika. Puedes retirar el consentimiento cuando quieras. Política de Privacidad."
+  },
+  "shopify": {
+    "checkout": {
+      "order_summary": {
+        "shopping_cart_label": "Carrito"
+      },
+      "general": {
+        "cart": "Carrito"
+      },
+      "payment_gateway": {
+        "cash_on_delivery_label": "Pago contrareembolso"
+      }
+    },
+    "email_marketing": {
+      "subscribed": {
+        "confirmation": "Gracias por suscribirte a nuestra newsletter. "
+      },
+      "unsubscribed": {
+        "confirmation": "Has cancelado tu suscripción a nuestra newsletter. "
+      }
+    },
+    "notices": {
+      "order": {
+        "cash_on_delivery": "Pago contrareembolso"
+      }
+    }
+  }
+}

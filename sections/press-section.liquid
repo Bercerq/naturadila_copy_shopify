@@ -1,0 +1,123 @@
+<div class="press-page-content">
+
+  <div class="press-header-wrapper">
+    
+    <div class="press-header-image">
+      <img src="{{ section.settings.header_image | img_url: 'master' }}" alt="{{ press.title }}">
+    </div>
+    <div class="press-header-content">
+      <header class="section-header">
+        <h1 class="section-header__title">
+          {{ page.title }}
+        </h1>
+        {% if section.settings.press-description != blank %}
+        <div class="press-header-description">{{ section.settings.press-description }}</div>
+        {% endif %}
+      </header>
+    </div>    
+  </div>
+  
+  <div class="press-list-wrapper">
+
+    <div class="press-list">
+      {% for block in section.blocks %}
+      
+      <div class="press-list-item press-list-item--{{ section.settings.item_max_height }}">
+        {% if block.settings.press_item_link != blank %}
+        <a href="{{ block.settings.press_item_link }}" target="_blank">
+          {% endif %}
+          <span class="press-item-link">
+            <div class="press-item-content">
+                <div class="image-wrap" style="padding-bottom: {{ 100 | divided_by: page.image.aspect_ratio }}%;">
+                  {%- assign img_url = block.settings.press-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                       data-src="{{ img_url }}"
+                       data-widths="[180, 360, 540, 720, 900, 1080]"
+                       data-aspectratio="{{ page.image.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ page.image.alt | escape }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ page.image | img_url: '400x' }}" alt="{{ page.title | escape }}">
+                  </noscript>
+                </div>
+              </div>
+
+              <div class="press__grid-meta">
+
+                <blockquote class="press-item-quote">
+                  {{ block.settings.press-item-quote }}
+                </blockquote>
+
+              </div>
+            </span>
+          {% if block.settings.press_item_link != blank %}
+          </a>
+          {% endif %}
+        </div>
+
+      {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+
+<style>
+  .press-list-item {
+    min-height: {{ section.settings.item_max_height }}px;
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Press page",
+    "settings": [
+	  {
+        "type": "image_picker",
+        "id": "header_image",
+        "label": "Select page header image"
+      },
+      {
+        "type": "richtext",
+        "id": "press-description",
+        "label": "Page description",
+        "default": "<p>Add page description</p>"
+      },
+      {
+        "type": "range",
+        "id": "item_max_height",
+        "label": "Quote card height",
+        "default": 350,
+        "min": 300,
+        "max": 400,
+        "step": 5,
+        "unit": "px"
+      }
+	],
+    "blocks": [
+	{
+        "type": "html",
+        "name": "Article",
+        "settings": [
+			{
+            "type": "image_picker",
+            "id": "press-image",
+            "label": "Image"
+          	},
+            {
+              "type": "richtext",
+              "id": "press-item-quote",
+              "label": "Press quote",
+              "default": "<p>Add quote</p>"
+            },
+            {
+              "type": "url",
+              "id": "press_item_link",
+              "label": "Add article link"
+            }
+		]
+  	}
+  ]
+}
+{% endschema %}

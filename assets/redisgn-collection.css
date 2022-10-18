@@ -1,0 +1,262 @@
+.wrapp-cutom {
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 80px;
+}
+
+.CollectionSection__title {
+    font-family: Poppins;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 40px;
+    letter-spacing: 0.04em;
+    text-align: left;
+    color: #000;
+
+}
+.allCollectionList {
+}
+.allCollectionList__list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 29px 0 21px 0;
+    padding: 0 0 29px 0;
+    border-bottom: 1px solid #CCCCCC;
+}
+.allCollectionList__list >*:not(:last-child) {
+    margin-right: 30px;
+}
+.allCollectionList__item {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.allCollectionList__link {
+    color: #666;
+    font-family: Poppins;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.allCollectionList__link.is-active{
+    color: #000;
+}
+
+.wrapp-cutom .rte {
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+    max-width: 720px;
+    width: 100%;
+}
+.wrapp-cutom .rte p {
+    margin: 0;
+}
+
+#CollectionAjaxContent  .columns-with-icons-two .image-wrap::before {
+    display: none;
+}
+#CollectionAjaxContent  .grid-custom-two {
+   display: flex;
+   justify-content: center;
+   align-items: first baseline;
+}
+#shopify-section-naturadika-text-with-iconTwo .grid-custom-two .grid__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#CollectionAjaxContent .featured-products-custom .grid {
+    left: 0;
+}
+#CollectionAjaxContent  .grid-custom-two >*:not(:last-child){
+    margin-right: 60px;
+}
+#CollectionAjaxContent  .grid-custom-two .custom-text-two{
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #000;
+}
+#CollectionAjaxContent  .grid-product__image-custom{
+    width: 100%;
+    max-width: none;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+.featured-products-custom  .grid-custom {
+    grid-column-gap: 55px;
+    grid-row-gap: 60px;
+}
+.featured-products-custom .grid--flush-bottom > .grid__item {
+    margin-bottom: 0;
+}
+.featured-products-custom .grid-product__meta {
+    padding: 6px 0 0 0;
+}
+#CollectionAjaxContent.featured-products-custom  .grid-product__title {
+    margin-bottom: 12px;
+}
+#CollectionAjaxContent .featured-products-custom  .grid-product__text {
+    font-family: Poppins;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #666666;
+    margin-bottom: 12px;
+}
+.featured-products-custom  .add-to-cart {
+    margin-top: 2px;
+}
+#CollectionAjaxContent #shopify-section-naturadika-text-with-icons .section-header  .custom-line{
+    margin-bottom: 35px;
+    position: relative;
+}
+#CollectionAjaxContent #shopify-section-naturadika-text-with-icons .section-header .custom-line::after {
+    display: none;
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    width: 50px;
+    height: 3px;
+    background-color: #000;
+}
+#shopify-section-naturadika-text-with-iconTwo .columns-with-icons-two {
+    padding: 30px 0;
+}
+#shopify-section-naturadika-text-with-iconTwo .columns-with-icons-two .section-header h2 {
+    font-family: Poppins;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 51px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: #000000;
+}
+
+
+
+@media only screen and (min-width: 768px) {
+    .mobile-menu-link-list {
+        left: -440px;
+    }
+}
+
+@media (max-width: 1174px) {
+    #CollectionAjaxContent .featured-products-custom  .grid-custom {
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+    }
+    #CollectionAjaxContent .featured-products-custom .add-to-cart .product__price {
+        font-size: 14px !important;
+    }
+}
+@media (max-width: 996px) {
+    #CollectionAjaxContent .featured-products-custom .grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+    #CollectionAjaxContent .featured-products-custom  .grid-custom {
+        grid-column-gap: 45px;
+        grid-row-gap: 45px;
+    }
+    #CollectionAjaxContent .columns-with-icons {
+        background-color: #F8F8F8;
+        padding: 49px 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .wrapp-cutom .rte {
+        max-width: 100%;
+        width: 100%;
+      }
+}
+
+@media(max-width: 767px) {
+
+    #CollectionAjaxContent #shopify-section-naturadika-text-with-icons .section-header .custom-line::after {
+        display: block;
+    }
+    .CollectionSection__title {
+        font-size: 22px;
+    }
+    .allCollectionList__link {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    .wrapp-cutom .rte {
+        font-size: 16px;
+    }
+    .wrapp-cutom {
+        padding: 0 17px;
+    }
+    .allCollectionList__list {
+        overflow-x: scroll;
+    }
+    .allCollectionList__list >*:not(:last-child) {
+        margin-right: 15px;
+    }
+    #CollectionAjaxContent .featured-products-custom .grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+    #CollectionAjaxContent .featured-products-custom  .grid-custom {
+        grid-column-gap: 20px;
+        grid-row-gap: 35px;
+    }
+    #CollectionAjaxContent .featured-products-custom .grid__item {
+        width: 100%;
+        max-width: 100%;
+    }
+    #CollectionAjaxContent .grid-custom-two {
+        flex-wrap: wrap;
+    }
+    #CollectionAjaxContent .grid-custom-two > * {
+        flex:  1 1 50%;
+    }
+    #shopify-section-naturadika-text-with-iconTwo .columns-with-icons-two {
+        padding: 0;
+    }
+    #shopify-section-naturadika-text-with-iconTwo .columns-with-icons-two .section-header h2 {
+        font-family: Poppins;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 33px;
+        letter-spacing: 0.04em;
+        text-align: left;
+    }
+    #CollectionAjaxContent .grid-custom-two .custom-text-two {
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #000
+    }
+    #CollectionAjaxContent .featured-products-custom .grid-product__text {
+        font-size: 12px;
+    }
+}
+@media (max-width: 400px) {
+    .featured-products-custom .ministars-widget {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+

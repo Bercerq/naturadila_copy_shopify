@@ -1,0 +1,229 @@
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-products-custom"
+  class="featured-products-custom">
+
+<div class="page-width">
+  
+  {% if section.settings.title != blank %}
+    <div class="section-header text-{{ section.settings.align_text }}">
+      <h2>{{ section.settings.title }}</h2>
+      <a href="{{ section.settings.view_all_url }}">{{ section.settings.view_all_text }}</a>
+    </div>
+  {% endif %}
+
+  <div class="grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom">
+    {%- assign grid_item_width = 'medium-up--one-third' -%}
+    {% case section.blocks.size %}
+      {% when 1 %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 2 %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 4 %}
+        {%- assign grid_item_width = 'medium-up--one-quarter' -%}
+    {% endcase %}
+    {% for block in section.blocks %}
+      {% if section.blocks.size == 5 and forloop.index < 3 %}
+        {%- assign column_width = 'medium-up--one-half' -%}
+      {% else %}
+        {%- assign column_width = grid_item_width -%}
+      {% endif %}
+    
+      <div class="grid__item {{ column_width }} text-{{ section.settings.align_text }}" {{ block.shopify_attributes }} data-aos="row-of-4">
+        {%- assign preview_image = block.settings.product.images[1] -%}
+        {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          
+        <div class="image-wrap text-spacing" style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;">
+          <a href="{{ block.settings.product.url }}" class="grid-product__link">
+            <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;">
+              <img class="grid-product__image lazyload"
+                   data-src="{{ img_url }}"
+                   data-widths="[180, 360, 540, 720, 900, 1080]"
+                   data-aspectratio="{{ preview_image.aspect_ratio }}"
+                   data-sizes="auto"
+                   alt="{{ preview_image.alt | escape }}">
+              <noscript>
+                {% assign hs_data_src = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ preview_image.alt | escape }}" class="grid-product__image lazyloaded lazyload hs-lazyload hs-id-d95a0dec" data-aspectratio="{{ preview_image.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ preview_image | img_url: '400x' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              </noscript>
+            </div>
+          </a>
+        </div>
+        <div class="grid-product__meta">
+          <a href="{{ block.settings.product.url }}" class="grid-product__link">
+          <div class="grid-product__title">{{ block.settings.product.title }}</div>
+          <div class="grid-product__text">{{ block.settings.product.metafields.custom.featured_text }}</div>
+          </a>
+          <div class="grid-product__reviews">
+            <!-- Start eKomi Collection Rating Code -->
+            <div id="widget-container" class="data-ekomi-emp ekomi-widget-container ekomi-widget-sf1411386273a27d5b325"  ></div>
+            <div id="ekomi-product-widget-identifier" class="prod-data-emp"  style="visibility: hidden">{{ block.settings.product.id }}</div>
+
+            <a href="https://www.ekomi.es/testimonios-naturadika.es.html" target="_blank"><img alt="naturadika.es Reviews with ekomi.es" src="https://smart-widget-assets.ekomiapps.de/resources/ekomi_logo.png" style="display: none;"/></a>
+
+            <script type="text/javascript">
+              function registerWidget (w, token) {
+                w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+                w['_customerId'] = 141138;
+                if (w['_language'] == undefined) {
+                  w['_language'] = new Array();
+                }
+                w['_language'][token] = 'es';                    w['_schema_fields'] = [];
+                w['_schema_fields']['brand'] = 'yourbrandHere';
+                w['_schema_fields']['description'] = 'yourdescriptionHere';
+                w['_schema_fields']['gtin8'] = 'yourgtin8Here';
+                w['_schema_fields']['offers'] = 'youroffersHere';
+                w['_schema_fields']['sku'] = 'yourskuHere';
+
+
+                if(typeof(w['_ekomiWidgetTokens']) !== 'undefined'){
+                  w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+                } else {
+                  w['_ekomiWidgetTokens'] = new Array(token);
+                }
+                if(typeof(ekomiWidgetJs) == 'undefined') {
+                  ekomiWidgetJs = true;
+                  var scr = document.createElement('script');scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+                  var head = document.getElementsByTagName('head')[0];head.appendChild(scr);
+
+                } else {if (typeof ekomiWidgetMain != 'undefined') {ekomiWidgetMain('ajax', token);}}
+                return true;
+              }
+              (function (w) {
+                var token = 'sf1411386273a27d5b325';
+                var k = document.getElementsByClassName("ekomi-widget-" + token);
+                for(var x=0;x<k.length;x++){ registerWidget(w,token); }
+              })(window);
+            </script>
+            <!-- End eKomi Collection Rating Code -->
+          </div>
+          <div class="grid-product__button">
+            {% capture form_id %}AddToCartForm-{{ block.settings.product.id }}{% endcapture %}
+            {% form 'product', block.settings.product, id: form_id, class: 'product-single__form' %}
+            <select name="id" id="ProductSelect-{{ block.settings.product.id }}" class="product-single__variants no-js">
+              {% for variant in block.settings.product.variants %}
+              {% if variant.available %}
+              <option value="{{ variant.id }}">
+                {{ variant.title }} - {{ variant.price | money_with_currency }}
+              </option>
+              {% else %}
+              <option disabled="disabled">
+                {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+              </option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            {% for variant in block.settings.product.variants limit: 1 %}
+            
+            <button type="button"
+                    name="add"
+                    class="btn add-to-cart"
+                    id="varId-{{ variant.id }}"
+            value="{{ variant.id }}"
+            data-inputid="{{ variant.id }}"
+            onclick="handleAddToCart(this,true)"
+                    {% unless block.settings.product.available %} disabled="disabled"{% endunless %}>
+              <span id="AddToCartText-{{ block.settings.product.id }}">
+                {% comment %} {{ 'products.product.add_to_cart' | t }} {% endcomment %}
+                {{ 'products.product.add_to_cart_alt' | t }}
+              </span>
+              -
+              <span id="ProductPrice-{{ block.settings.product.id }}"
+                    class="product__price{% if block.settings.product.compare_at_price > block.settings.product.price %} on-sale{% endif %}">
+                {{ block.settings.product.price | money }}
+              </span>
+            </button>
+            {%endfor%}
+            {% endform %}
+          </div>
+        </div>
+
+  </div>
+    {% endfor %}
+</div>
+</div>
+
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Naturadika Products",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      },
+	  {
+        "type": "url",
+        "id": "view_all_url",
+        "label": "View all link"
+      },
+	  {
+        "type": "text",
+        "id": "view_all_text",
+        "label": "View all text"
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product_block",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Naturadika Featured Products",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "product_block"
+          },
+          {
+            "type": "product_block"
+          },
+          {
+            "type": "product_block"
+          },
+		  {
+            "type": "product_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

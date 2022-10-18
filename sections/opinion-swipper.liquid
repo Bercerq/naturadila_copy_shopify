@@ -1,0 +1,165 @@
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+  <div
+    data-section-id="{{ section.id }}"
+    data-section-type="reviews-carousel"
+    class="ekomi-reviews opinion-swipper">
+    <h2 class="opinion-swipper-title">{{section.settings.title}}</h2>
+    <div class="page-width">
+      {%- comment -%}
+      <div class="rating-block">
+        <h2 class="title">Esto es lo que dicen de nosotros</h2>
+        <div class="rating" onclick="window.open('https://www.ekomi.es/testimonios-naturadika.es.html','_blank')">
+          <div class="stars inactive">
+            <div class="stars active"></div>
+          </div>
+        </div>
+        <div class="info">
+          <a class="image" href="https://www.ekomi.es" target="_blank">
+            <img src="https://sw-assets.ekomiapps.de/resources/es_seal_gold-105.png" class="sseal" title="eKomi gold seal Award" alt="eKomi gold seal">
+          </a>
+          <p class="text">Más de <strong>1000</strong> reviews de <strong>5 estrellas</strong></p>
+        </div>
+      </div>
+      {%- endcomment -%}
+      <div class="reviews-grid">
+        <div class="reviews-carousel-wrapper" id="ReviwsCarousel-{{ section.id }}" data-count={{ section.blocks.size }}>
+          {% for block in section.blocks %}
+          <div class="review-box review-slide--{{ block.id }}">
+            <div class="review-content">
+              <h3 class="title">{{ block.settings.title }}</h3>
+              <div class="info">
+                <span class="label">{{ block.settings.label }}</span>
+                <span class="date">{{ block.settings.date }}</span>
+              </div>
+              <div class="rating" onclick="window.open('https://www.ekomi.es/testimonios-naturadika.es.html','_blank')">
+                <div class="stars inactive">
+                  <div class="stars active" style="width:{{block.settings.rating}}%"></div>
+                </div>
+              </div>
+              <p class="text">{{ block.settings.review }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <style>
+    .opinion-swipper-title {
+      text-align: center;
+      font-family: Poppins;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 42px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .ekomi-reviews.opinion-swipper::before {
+      display: none;
+    }
+    .ekomi-reviews.opinion-swipper{
+      background-color: #fff;
+    }
+    .ekomi-reviews.opinion-swipper .review-box .review-content {
+      background: #F8F8F8;
+    }
+    .ekomi-reviews.opinion-swipper .reviews-grid .slick-prev {
+      left: 50%;
+      transform: translate(950%,150%);
+    }
+    .ekomi-reviews.opinion-swipper .reviews-grid .slick-next {
+      right: 50%;
+      transform: translate(1500%,150%);
+    }
+    @media(max-width: 1049px) {
+      .ekomi-reviews.opinion-swipper .reviews-grid .slick-prev {
+        transform: translate(-250%,150%);      
+      }
+    }
+    @media(max-width: 768px) {
+      .ekomi-reviews.opinion-swipper .reviews-grid .slick-next {
+        transform: translate(250%,150%);
+    }
+    .opinion-swipper-title {
+      font-family: Poppins;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 33px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    
+    }
+  </style>
+  
+  {% if section.settings.divider %}</div>{% endif %}
+  
+  {% schema %}
+    {
+      "name": "Opinion reviews",
+    "class": "index-section",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "divider",
+          "label": "Show section divider",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+    ],
+     "blocks": [
+        {
+          "type": "review",
+          "name": "Review",
+          "settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+        {
+              "type": "text",
+              "id": "label",
+              "label": "Label"
+            },
+            {
+              "type": "text",
+              "id": "date",
+              "label": "Date"
+            },
+            {
+              "type": "range",
+              "id": "rating",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "unit": "%",
+              "label": "Range",
+              "default": 90
+            },
+            {
+              "type": "text",
+              "id": "review",
+              "label": "Review"
+            }
+          ]
+        }
+      ],
+    "presets": [
+        {
+          "name": "Naturadika opinion reviews",
+          "category": "Text",
+          "blocks": [
+          ]
+        }
+      ]
+    }
+  {% endschema %}
+  

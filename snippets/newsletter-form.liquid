@@ -1,0 +1,45 @@
+{%- assign newsletter_form_id = 'newsletter-' | append: section_id -%}
+{% form 'customer', id: newsletter_form_id %}
+  {% if form.posted_successfully? %}
+    <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+  {% endif %}
+  {% if form.errors and form.context == snippet_context %}
+    {{ form.errors | default_errors }}
+  {% endif %}
+
+  <label for="Email-{{ section_id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+  <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+  <input type="hidden" name="contact[context]" value="{{ snippet_context }}">
+  <div class="input-group newsletter__input-group">
+    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email-{{ section_id }}" class="input-group-field newsletter__input" autocorrect="off" autocapitalize="off">
+    <div class="input-group-btn">
+      <button id="form-button-{{ section_id }}" type="submit" class="btn" name="commit" disabled="disabled">
+        <span class="form__submit--large">{{ 'general.newsletter_form.submit' | t }}</span>
+        <span class="form__submit--small">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 50 15"><path d="M0 9.63V5.38h35V0l15 7.5L35 15V9.63z"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="newsletter-checkbox-wrapper">
+    <input type="checkbox" id="consent-{{ section_id }}">
+    <label for="consent-{{ section_id }}">{{ 'naturadika.newsletter_consent' | t }}</label> 
+  </div>
+{% endform %}
+
+<script>  
+  const checkbox{{section_id}} = document.getElementById('consent-{{ section_id }}');
+  const button{{section_id}} = document.getElementById('form-button-{{ section_id }}');
+
+  checkbox{{section_id}}.addEventListener('change', (event) => {
+    if (event.target.checked) {
+      button{{section_id}}.removeAttribute('disabled');
+    } else {
+      button{{section_id}}.setAttribute('disabled', 'disabled');
+    }
+  })
+</script>
+
+            
+<div class="klaviyo-form-U2NxJY"></div>
+              

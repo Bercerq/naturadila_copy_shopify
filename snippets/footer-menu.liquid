@@ -1,0 +1,38 @@
+{% if linklists[block.settings.menu].links.size > 0 %}
+  {% if block.settings.show_footer_title %}
+    <p class="h4 footer__title hide widescreen--show">
+      {{ linklists[block.settings.menu].title }}
+    </p>
+    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn widescreen--hide" aria-controls="Footer-{{ block.id }}">
+      {{ linklists[block.settings.menu].title }}
+      {% include 'collapsible-icons' %}
+    </button>
+  {% endif %}
+  <div
+    {% if block.settings.show_footer_title %}
+      id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--wide"
+    {% endif %}>
+    <div class="collapsible-content__inner">
+      <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
+        <ul class="no-bullets site-footer__linklist">
+          {% for link in linklists[block.settings.menu].links %}
+          <li>
+            
+            {% case link.url %}
+              {% when '/pages/preguntas-frecuentes' %}
+              	<span data-link="L3BhZ2VzL3ByZWd1bnRhcy1mcmVjdWVudGVz" class="obfuscated-anchor">{{ link.title }}</span>
+            
+              {% when '/pages/contactanos' %}
+                <span data-link="L3BhZ2VzL2NvbnRhY3Rhbm9z" class="obfuscated-anchor">{{ link.title }}</span>
+
+              {% else %}
+              	<a href="{{ link.url }}">{{ link.title }}</a>
+            {% endcase %}
+
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}

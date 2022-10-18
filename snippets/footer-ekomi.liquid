@@ -1,0 +1,29 @@
+<div id="widget-container" class="ekomi-widget-container ekomi-widget-sf14113861e6b658847bb"  ></div>
+  <a href="https://www.ekomi.es/testimonios-naturadika.es.html" target="_blank"><img alt="naturadika.es Reviews with ekomi.es" src="https://smart-widget-assets.ekomiapps.de/resources/ekomi_logo.png" style="display: none;"/></a>
+  <script type="text/javascript">
+    function registerWidget (w, token) {
+      w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+      w['_customerId'] = 141138;
+      if (w['_language'] == undefined) {
+        w['_language'] = new Array();
+      }
+      w['_language'][token] = 'es';        
+
+      if(typeof(w['_ekomiWidgetTokens']) !== 'undefined'){
+        w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+      } else {
+        w['_ekomiWidgetTokens'] = new Array(token);
+      }
+      if(typeof(ekomiWidgetJs) == 'undefined') {
+        ekomiWidgetJs = true;
+        var scr = document.createElement('script');scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+        var head = document.getElementsByTagName('head')[0];head.appendChild(scr);
+      }
+      return true;
+    }
+    (function (w) {
+      var token = 'sf14113861e6b658847bb';
+      var k = document.getElementsByClassName("ekomi-widget-" + token);
+      for(var x=0;x<k.length;x++){ registerWidget(w,token); }
+    })(window);
+  </script>

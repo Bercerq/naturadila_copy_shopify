@@ -1,0 +1,418 @@
+{%- assign per_row = section.settings.per_row -%}
+{%- assign paginate_by = per_row | times: section.settings.rows_per_page -%}
+
+{% paginate collection.products by section.settings.products_per_page %}
+
+<div
+  id="CollectionSection"
+  class="wrapp-cutom"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-template">
+
+  <h2 class="CollectionSection__title">{{collection.title}}</h2>
+
+  <div class="allCollectionList">
+    <ul class="allCollectionList__list">
+      {% for item in section.blocks %}
+        {%- assign elem = item.settings.collection-item -%}
+        {%- assign text = item.settings.title-coll  -%}
+        <li class="allCollectionList__item">
+          <a href="{{elem.url}}" class="allCollectionList__link {% if request.path contains elem.url  %}is-active{% endif %}">
+            {% if text != blank %}
+              {{text | capitalize}}
+              {%- else -%}
+              {{elem.title | capitalize}}</a>
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  {%- if section.settings.description_position == 'top' -%}
+    {% if collection.description != blank %}
+      <div class="rte">
+        {{ collection.description }}
+      </div>
+      <hr class="hr--clear hr--small">
+    {% endif %}
+  {%- endif -%}
+
+  {%- if section.settings.subcollection_style == 'above' -%}
+    {%- include 'subcollections', per_row: section.settings.subcollections_per_row -%}
+  {%- endif -%}
+
+  <div class="collection-filter">
+    {%- assign current_filter_size = current_tags | size -%}
+    <div class="collection-filter__item collection-filter__item--drawer">
+      <button
+        type="button"
+        class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+        aria-controls="FilterDrawer">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
+        {{ 'collections.filters.title_tags' | t }}
+        {%- if current_filter_size > 0 -%}
+          ({{ current_filter_size }})
+        {%- endif -%}
+      </button>
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--count small--hide">
+      {%- if section.settings.enable_collection_count -%}
+        {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+      {%- endif -%}
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--sort">
+      <div class="collection-filter__sort-container">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+        <select name="SortBy" id="SortBy" data-default-sortby="{{ collection.default_sort_by }}">
+          <option value="title-ascending"{% if sort_by == collection.default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+          {% for option in collection.sort_options %}
+            <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.enable_collection_count -%}
+    <p class="medium-up--hide text-center">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</p>
+  {%- endif -%}
+
+  <div
+    class="grid  grid--uniform grid--collection{% if section.settings.mobile_flush_grid %} small--grid--flush{% endif %}"
+    data-scroll-to>
+    {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+
+    {% case per_row %}
+    {% when 2 %}
+      {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 3 %}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+    {% when 4 %}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+    {% when 5 %}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+    {% endcase %}
+
+	{%- if section.settings.description_position == 'box' -%}
+    	{%- include 'collection-grid-item-box' -%}
+    {%- endif -%}
+          {%- comment -%}
+
+    {%- for product in collection.products -%}
+      {%- include 'product-grid-item' -%}
+    {%- else -%}
+      <div class="grid__item">
+        <p>{{ 'collections.general.no_matches' | t }}</p>
+      </div>
+    {%- endfor -%}
+          {%- endcomment -%}
+          <div
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-products-custom"
+  class="featured-products-custom">
+
+<div class="page-width">
+  
+  {% if section.settings.title != blank %}
+    <div class="section-header text-{{ section.settings.align_text }}">
+      <h2>{{ section.settings.title }}</h2>
+      <a href="{{ section.settings.view_all_url }}">{{ section.settings.view_all_text }}</a>
+    </div>
+  {% endif %}
+
+  <div class="grid  grid-custom {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom">
+    {%- assign grid_item_width = 'medium-up--one-third' -%}
+    {% case section.blocks.size %}
+      {% when 1 %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 2 %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 4 %}
+        {%- assign grid_item_width = 'medium-up--one-quarter' -%}
+    {% endcase %}
+    {% for block in collection.products %}
+    {% if section.blocks.size == 5 and forloop.index < 3 %}
+      {%- assign column_width = 'medium-up--one-half' -%}
+    {% else %}
+      {%- assign column_width = grid_item_width -%}
+    {% endif %}
+    {% assign productTags = block.tags | join: ', ' %}
+
+    {% unless productTags contains '-upsell' %}
+
+    <div class="grid__item {{ column_width }} text-{{ section.settings.align_text }}" {{ block.shopify_attributes }} data-aos="row-of-4">
+      {%- assign preview_image = block.images[1] -%}
+      {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <div class="image-wrap text-spacing" style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;">
+          <a href="{{ block.url }}" class="grid-product__link">
+          <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;">
+              <img class="grid-product__image lazyload grid-product__image-custom"
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080]"
+                  data-aspectratio="{{ preview_image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ preview_image.alt | escape }}">
+              <noscript>
+                {% assign hs_data_src = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ preview_image.alt | escape }}" class="grid-product__image lazyloaded lazyload hs-lazyload hs-id-d95a0dec" data-aspectratio="{{ preview_image.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ preview_image | img_url: '400x' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              </noscript>
+          </div>
+          </a>
+        </div>
+        <div class="grid-product__meta">
+          <a href="{{ block.url }}" class="grid-product__link">
+          <div class="grid-product__title">{{ block.title }}</div>
+          <div class="grid-product__text">{{ block.metafields.custom.featured_text }}</div>
+          </a>
+          <div class="grid-product__reviews">
+            <!-- Start eKomi Collection Rating Code -->
+            <div id="widget-container" class="data-ekomi-emp ekomi-widget-container ekomi-widget-sf1411386273a27d5b325"  ></div>
+            <div id="ekomi-product-widget-identifier" class="prod-data-emp"  style="visibility: hidden">{{ block.id }}</div>
+    
+            <a href="https://www.ekomi.es/testimonios-naturadika.es.html" target="_blank"><img alt="naturadika.es Reviews with ekomi.es" src="https://smart-widget-assets.ekomiapps.de/resources/ekomi_logo.png" style="display: none;"/></a>
+    
+            <script type="text/javascript">
+              function registerWidget (w, token) {
+                w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+                w['_customerId'] = 141138;
+                if (w['_language'] == undefined) {
+                  w['_language'] = new Array();
+                }
+                w['_language'][token] = 'es';                    w['_schema_fields'] = [];
+                w['_schema_fields']['brand'] = 'yourbrandHere';
+                w['_schema_fields']['description'] = 'yourdescriptionHere';
+                w['_schema_fields']['gtin8'] = 'yourgtin8Here';
+                w['_schema_fields']['offers'] = 'youroffersHere';
+                w['_schema_fields']['sku'] = 'yourskuHere';
+    
+    
+                if(typeof(w['_ekomiWidgetTokens']) !== 'undefined'){
+                  w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+                } else {
+                  w['_ekomiWidgetTokens'] = new Array(token);
+                }
+                if(typeof(ekomiWidgetJs) == 'undefined') {
+                  ekomiWidgetJs = true;
+                  var scr = document.createElement('script');scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+                  var head = document.getElementsByTagName('head')[0];head.appendChild(scr);
+    
+                } else {if (typeof ekomiWidgetMain != 'undefined') {ekomiWidgetMain('ajax', token);}}
+                return true;
+              }
+              (function (w) {
+                var token = 'sf1411386273a27d5b325';
+                var k = document.getElementsByClassName("ekomi-widget-" + token);
+                for(var x=0;x<k.length;x++){ registerWidget(w,token); }
+              })(window);
+            </script>
+            <!-- End eKomi Collection Rating Code -->
+          </div>
+          <div class="grid-product__button">
+            {% capture form_id %}AddToCartForm-{{ block.id }}{% endcapture %}
+            {% form 'product', block, id: form_id, class: 'product-single__form' %}
+            <select name="id" id="ProductSelect-{{ block.id }}" class="product-single__variants no-js">
+              {% for variant in block.variants %}
+              {% if variant.available %}
+              <option value="{{ variant.id }}">
+                {{ variant.title }} - {{ variant.price | money_with_currency }}
+              </option>
+              {% else %}
+              <option disabled="disabled">
+                {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+              </option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            {% for variant in block.variants limit: 1 %}
+            <button  id="varId-{{ variant.id }}"
+            value="{{ variant.id }}"
+            data-inputid="{{ variant.id }}"
+                class="btn add-to-cart"
+            type="button" 
+            onclick="handleAddToCart(this,true)"
+                    {% unless block.available %} disabled="disabled"{% endunless %}>
+              <span id="AddToCartText-{{ variant.id }}">
+                {% comment %} {{ 'products.product.add_to_cart' | t }} {% endcomment %}
+                {{ 'products.product.add_to_cart_alt' | t }}
+              </span>
+              -
+              <span id="ProductPrice-{{ block.id }}"
+                    class="product__price{% if block.compare_at_price > block.price %} on-sale{% endif %}">
+                {{ block.price | money }}
+              </span>
+            </button>
+                          {% endfor %}
+            {% endform %}
+          </div>
+        </div>
+    </div>
+  <!-- </a> -->
+  {%endunless%}
+  {% endfor %}
+  
+
+  </div>
+</div>
+
+</div>
+          
+
+  </div>
+  {%- if section.settings.subcollection_style == 'below' -%}
+    {%- include 'subcollections', per_row: section.settings.subcollections_per_row -%}
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    {%- include 'pagination' -%}
+  {%- endif -%}
+
+  {%- if section.settings.description_position == 'bottom' -%}
+    {% if collection.description != blank %}
+      <hr class="hr--clear hr--small">
+      <div class="rte">
+        {{ collection.description }}
+      </div>
+      <hr class="hr--clear hr--small">
+    {% endif %}
+  {%- endif -%}
+
+  {%- if settings.quick_shop_enable -%}
+    {%- for product in collection.products -%}
+      {%- if product.available -%}
+        {%- include 'quick-shop-modal' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Collection pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "description_position",
+        "label": "Collection description position",
+        "default": "top",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          },
+          {
+            "value": "box",
+            "label": "Box"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Subcollections"
+      },
+      {
+        "type": "paragraph",
+        "content": "Links to collections from your menu will appear here. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-create-subcollections)"
+      },
+      {
+        "type": "select",
+        "id": "subcollection_style",
+        "label": "Subcollection style",
+        "default": "above",
+        "options": [
+          {
+            "value": "above",
+            "label": "Above products"
+          },
+          {
+            "value": "below",
+            "label": "Below products"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "subcollections_per_row",
+        "label": "Subcollections per row",
+        "default": 5,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "header",
+        "content": "Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_collection_count",
+        "label": "Enable collection count",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "per_row",
+        "label": "Products per row",
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "rows_per_page",
+        "label": "Rows per page",
+        "default": 7,
+        "min": 3,
+        "max": 20,
+        "step": 1
+      },
+	  {
+        "type": "range",
+        "id": "products_per_page",
+        "label": "Products per page",
+        "default": 7,
+        "min": 1,
+        "max": 50,
+        "step": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "mobile_flush_grid",
+        "label": "Flush grid on mobile",
+        "default": false
+      }
+    ],
+    "blocks": [
+    {
+      "type": "collection-block",
+      "name": "collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection-item",
+          "label": "Collection item"
+        },
+       {
+        "type": "textarea",
+        "id": "title-coll",
+        "label": "Name collection"
+       }
+      ]
+    }
+  ]
+  }
+{% endschema %}

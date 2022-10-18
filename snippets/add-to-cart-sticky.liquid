@@ -1,0 +1,50 @@
+{% capture form_id %}StickyAddToCartForm-{{ product.id }}{% endcapture %}
+
+<div class="add-to-cart-sticky">
+  {% form 'product', product, id: form_id, class: 'product-action flex-grid flex-grid-center variants' %}
+
+  {% comment %}  
+  <select id="product-select-{{ product.id }}" name="id">
+    {% for variant in product.variants %}
+
+    {% if variant.available %}
+    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title | remove: 'Default Title' }} {{ variant.price | money }}</option>
+
+    {% else %}
+    <option disabled="disabled">
+      {{ variant.title }} - {{'products.product.sold_out' | t }}
+    </option>
+
+    {% endif %}
+
+    {% endfor %}
+  </select>
+  {% endcomment %}
+  
+  {% assign variant = product.variants.first %}
+  <input type="hidden" name="id" value="{{ variant.id }}" />
+  
+  <div class="sticky-product-action">
+
+    <div class="variant-title">
+      {% if product.metafields.quantity.title %}
+      <p class="h2 product-single__title">{{ product.metafields.quantity.title }}</p>
+      {% endif %}
+      {% if product.metafields.quantity.sub_title %}
+      <p class="variant-subtitle">{{ product.metafields.quantity.sub_title }}</p> 
+      {% endif %}
+    </div>
+
+    <button class="add-to-cart btn btn-1" type="submit">
+      <span class="add-to-cart_label">
+        {{ 'products.product.add_to_cart' | t }}
+      </span>
+      -
+      <span id="ProductPrice-{{ section_id }}"
+            class="product__price">
+        {{ product.price | money }}
+      </span>
+    </button>
+  </div>
+  {% endform %}
+</div>

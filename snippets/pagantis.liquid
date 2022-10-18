@@ -1,0 +1,22 @@
+{%- comment -%} PMT SIMULATOR{%- endcomment -%}
+<script type="text/javascript" src="https://cdn.pagantis.com/js/pg-v2/sdk.js"></script> 
+
+<div class="customSimulator"></div>
+
+<script>
+options = {
+  'publicKey': 'pk_ea77861725124efbb4de8d72',
+  'selector': '.customSimulator',
+  'type': pgSDK.simulator.types.PRODUCT_PAGE,
+  'skin': pgSDK.simulator.skins.BLUE,
+  'itemAmount': '{{ current_variant.price | money}}',
+  'itemQuantity': 'div.product-single__meta form.product-single__form .js-qty__num', 'locale': '{{ shop.locale }}',
+  'country': '{{ shop.locale }}',
+}
+
+pgSDK.simulator.init(options);
+
+</script>
+<style>
+  .customSimulator iframe {height: 40px !important;}
+</style>

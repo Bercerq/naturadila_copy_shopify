@@ -1,0 +1,197 @@
+<script id="CartTemplate" type="text/template">
+{% raw %}
+
+  <div class="drawer-scroll-pane">
+
+  <div class="drawer__scrollable">
+    {{#items}}
+    <div class="ajaxcart__product appear-animation appear-delay-{{animationRow}}">
+      <div class="ajaxcart__row">
+          <div class="ajaxcart__product-image-container">
+            <a href="{{url}}" class="ajaxcart__product-image"><img src="{{img}}" alt="{{name}}"></a>
+          </div>
+          <div class="ajaxcart__product-name-container">
+            <div class="ajaxcart__product-name--wrapper">
+              <a href="{{url}}" class="ajaxcart__product-name" style="color:{{titleColor}}">{{{name}}}</a>
+              <p class="variant-subtitle">{{subTitle}}</p> 
+              {{#if variation}}
+                <span class="ajaxcart__product-meta">{{variation}}</span>
+              {{/if}}
+              {{#properties}}
+                {{#each this}}
+                  {{#if this}}
+                    <span class="ajaxcart__product-meta">{{@key}}: {{this}}</span>
+                  {{/if}}
+                {{/each}}
+              {{/properties}}
+            </div>
+
+            <div class="price-quantity-container">
+                <div class="ajaxcart__price-wrapper">
+                  {{#if discountsApplied}}
+                    <small class="cart__price--strikethrough">{{{price}}}</small>
+                    <span class="ajaxcart__price">
+                      {{{discountedPrice}}}
+                    </span>
+                  {{else}}
+                    <span class="ajaxcart__price">
+                      {{{price}}}
+                    </span>
+                  {{/if}}
+                </div>
+                  <div class="ajaxcart__quantity">
+                    <label for="updates_{{key}}" class="visually-hidden">{% endraw %}{{ 'products.product.quantity' | t }}{% raw %}</label>
+                    <div class="qty-select">
+                    	<select data-key="{{key}}">
+                            {{#if (ifEquals itemQty "1")}}
+                              <option selected="selected" value="1">1</option>
+                            {{else}}
+                              <option value="1">1</option>
+                            {{/if}}
+                            {{#if (ifEquals itemQty "2")}}
+                              <option selected="selected" value="2">2</option>
+                            {{else}}
+                              <option value="2">2</option>
+                            {{/if}}
+                            {{#if (ifEquals itemQty "3")}}
+                              <option selected="selected" value="3">3</option>
+                            {{else}}
+                              <option value="3">3</option>
+                            {{/if}}
+                            {{#if (ifEquals itemQty "4")}}
+                              <option selected="selected" value="4">4</option>
+                            {{else}}
+                              <option value="4">4</option>
+                            {{/if}}
+                            {{#if (ifEquals itemQty "5")}}
+                              <option selected="selected" value="5">5</option>
+                            {{else}}
+                              <option value="5">5</option>
+                            {{/if}}
+                            {{#if (ifEquals itemQty "6")}}
+                              <option selected="selected" value="6">6</option>
+                            {{else}}
+                              <option value="6">6</option>
+                            {{/if}}
+  						</select>
+  					</div>
+                    <div class="js-qty__wrapper">
+                    
+                     <button type="button" 
+                      class="js-qty__adjust--remove"
+                      data-key="{{key}}"
+                      aria-label="{% endraw %}{{ 'cart.general.remove' | t }}{% raw %}">
+                        <span>{% endraw %}{{ 'cart.general.remove' | t }}{% raw %}</span>
+                      </button>
+                    </div>
+              </div>
+            </div>
+            <div class="grid grid--full">
+              {{#if discountsApplied}}
+                <div class="grid__item text-right">
+                  {{#each discounts}}
+                    <small class="ajaxcart__discount cart__discount">
+                      {{this.discount_application.title}} (-{{{this.formattedAmount}}})
+                    </small>
+                  {{/each}}
+                </div>
+              {{/if}}
+
+              {{#if unitBase}}
+                <div class="grid__item text-right">
+                  <div class="product__unit-price">
+                    {{{ unitPrice }}}/{{{ unitBase }}}
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+        </div>
+      </div>
+    </div>
+    {{/items}}
+
+    {% endraw %}{% if settings.cart_notes_enable %}{% raw %}
+      <div class="appear-animation appear-delay-{{lastAnimationRow}}">
+        <label for="CartSpecialInstructions" class="ajaxcart__note">{% endraw %}{{ 'cart.general.note' | t }}{% raw %}</label>
+        <textarea name="note" class="input-full" id="CartSpecialInstructions">{{note}}</textarea>
+      </div>
+    {% endraw %}{% endif %}{% raw %}
+  </div>
+  
+  <div class="drawer_info-wrapper appear-animation appear-delay-{{lastAnimationRow}}"">
+  	<div class="drawer_info-title">{% endraw %}{{ 'general.cart_drawer.drawer_info_title' | t }}{% raw %}</div>
+    <div class="drawer_info-box-wrapper">
+      <div class="drawer_info-box">
+        <div class="drawer_info-img">
+          {% endraw %}{%- include 'drawer-image-1' -%}{% raw %}
+        </div>
+        <strong class="drawer_info-header">{% endraw %}{{ 'general.cart_drawer.feature_1_title' | t }}{% raw %}</strong>
+        <p class="drawer_info-text">{% endraw %}{{ 'general.cart_drawer.feature_1_text' | t }}{% raw %}</p>
+      </div>
+      <div class="drawer_info-box">
+        <div class="drawer_info-img">
+          {% endraw %}{%- include 'drawer-image-2' -%}{% raw %}
+        </div>
+        <strong class="drawer_info-header">{% endraw %}{{ 'general.cart_drawer.feature_2_title' | t }}{% raw %}</strong>
+        <p class="drawer_info-text">{% endraw %}{{ 'general.cart_drawer.feature_2_text' | t }}{% raw %}</p>
+      </div>
+      <div class="drawer_info-box">
+        <div class="drawer_info-img">
+          {% endraw %}{%- include 'drawer-image-3' -%}{% raw %}	
+        </div>
+        <strong class="drawer_info-header">{% endraw %}{{ 'general.cart_drawer.feature_3_title' | t }}{% raw %}</strong>
+        <p class="drawer_info-text">{% endraw %}{{ 'general.cart_drawer.feature_3_text' | t }}{% raw %}</p>
+      </div>
+    </div>
+    
+    <div class="discount_code-at_check_out">{% endraw %}{{ shop.metafields.content.discount_code_at_check_out }}{% raw %}</div>
+  </div>
+   
+  </div>
+   
+  <div class="drawer__footer appear-animation appear-delay-{{lastAnimationRow}}">
+    {{#if cartDiscounts }}
+      <div class="ajaxcart__subtotal-wrapper">
+          <div class="ajaxcart__subtotal">{% endraw %}{{ 'cart.general.discounts' | t }}{% raw %}</div>
+          {{#each cartDiscounts}}
+            <div class="ajaxcart__price cart__discount">{{this.title}} (-{{{this.formattedAmount}}})</div>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+    <div class="ajaxcart__subtotal-wrapper">
+        <div class="ajaxcart__subtotal">{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</div>
+        <div class="ajaxcart__price">{{{totalPrice}}}</div>
+    </div>
+    <div class="ajaxcart__shipping">
+    	<div class="ajaxcart__shipping-info">{% endraw %}{{ 'cart.general.shipping_info' | t }}{% raw %}</div>
+        <div class="ajaxcart__shipping-type">{% endraw %}{{ 'cart.general.shipping_type' | t }}{% raw %}</div>
+    </div>
+    <p class="ajaxcart__note" style="display: none">
+      {% endraw %}{{ 'cart.general.shipping_at_checkout' | t }}{% raw %}
+    </p>
+    {% endraw %}{% if settings.cart_terms_conditions_enable %}
+      <p class="ajaxcart__note ajaxcart__note--terms">
+        <input type="checkbox" id="CartAgree" />
+        <label for="CartAgree">
+          {% if settings.cart_terms_conditions_link != blank %}
+            {{ 'cart.general.terms_html' | t: url: settings.cart_terms_conditions_link }}
+          {% else %}
+            {{ 'cart.general.terms' | t }}
+          {% endif %}
+        </label>
+      </p>
+    {% endif %}{% raw %}
+    {% endraw %}
+      {% if additional_checkout_buttons and settings.cart_additional_buttons %}
+        <div class="additional-checkout-buttons additional-checkout-buttons--vertical">{{ content_for_additional_checkout_buttons }}</div>
+      {% endif %}
+    {% raw %}
+    <div class="btn-container">
+      <button type="submit" class="btn cart__checkout{% endraw %}{% if settings.cart_terms_conditions_enable %}{% raw %} cart__checkout--ajax{% endraw %}{% endif %}{% raw %}" name="checkout">
+        {% endraw %}{{ 'cart.general.checkout' | t }}{% raw %}
+      </button>
+    </div>
+  </div>
+{% endraw %}
+</script>

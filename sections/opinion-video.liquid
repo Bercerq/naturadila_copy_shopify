@@ -1,0 +1,239 @@
+<div class="videoCustom page-width">
+    <h2 class="videoCustom__title">{{section.settings.title}}</h2>
+    <div class="videoCustom__container">
+        {% for block in section.blocks %}
+            <div class="videoCustom__wrap" >
+                <video class="ideoCustom__wrap-video" 
+                {% if block.settings.poster != blank %}
+                    poster="{{block.settings.poster | img_url: 'master'}}"
+                {% endif %}
+                src="{{block.settings.video}}"  playsinline  loop>
+                </video>
+                <div class="videoCustom__wrap-btn">
+                    <div class="videoCustom__wrap-button">
+                        <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.4452 9.88377C16.4452 10.3762 15.9436 10.7303 15.9436 10.7303L1.86488 19.4644C0.838702 20.138 0 19.639 0 18.3625V1.40337C0 0.12365 0.838703 -0.372097 1.86653 0.299879L15.9452 9.03722C15.9452 9.03722 16.4452 9.39132 16.4452 9.88377Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{%- style -%}
+    .videoCustom {
+        padding-top: {{section.settings.pt}}px;
+        padding-bottom: {{section.settings.pb}}px;
+    }
+    @media(max-width: 768px) {
+        .videoCustom {
+            padding-top: {{section.settings.pt | divided_by: 2}}px;
+            padding-bottom: {{section.settings.pb | divided_by: 2}}px;
+        }
+    }
+{%- endstyle -%}
+
+<style>
+
+.videoCustom__title {
+    text-align: center;
+    margin-bottom: 14px;
+    font-family: Poppins;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36px;
+    letter-spacing: 0.04em;
+    text-align: center;
+
+}
+.videoCustom__container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+.videoCustom__container > *{
+    flex: 1 1 33.3%;
+    max-width: 400px;
+    width: 100%;
+}
+.videoCustom__container > *:not(:last-child){
+    margin-right: 33px;
+}
+.videoCustom__wrap {
+    position: relative;
+
+}
+.ideoCustom__wrap-video {
+    max-width: 400px;
+    max-height: 250px;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.videoCustom__wrap-btn {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.videoCustom__wrap-button {
+    background: #000000;
+    opacity: 0.6;
+    border-radius: 6px;
+    height: 42px;
+    width: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.videoCustom__wrap.isActive .videoCustom__wrap-btn {
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+}
+/* .videoCustom__wrap video{
+    position: relative;
+   z-index: 1; 
+}
+.videoCustom__wrap.isActive video{
+    position: relative;
+   z-index: 10000; 
+}
+.videoCustom__wrap{
+    position: relative;
+   z-index: 1000; 
+}
+.videoCustom__wrap.isActive{
+    position: relative;
+   z-index: 1; 
+} */
+
+
+@media(max-width: 998px) {
+    .videoCustom__title {
+        margin-bottom: 17px;
+        font-family: Poppins;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 27px;
+        letter-spacing: 0.04em;
+        text-align: center;
+
+    }
+    .videoCustom__container {
+        flex-wrap: wrap;
+    }
+    .videoCustom__container > *{
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    .videoCustom__container > *:not(:last-child){
+        margin-right: 0px;
+        margin-bottom: 20px;
+    }
+    .ideoCustom__wrap-video {
+        max-width: 100%;
+        max-height: 240px;
+    }
+    .videoCustom__title p {
+        display: inline;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+
+    let videosWrap = document.querySelectorAll(".videoCustom__wrap-btn");
+    let videos = document.querySelectorAll(".videoCustom__wrap video");
+    videosWrap.forEach((elem,index)=> {
+        videosWrap[index].addEventListener("click",function (event) {
+            startVideo(event)
+        })
+    })
+    videos.forEach((elem,index)=> {
+        videos[index].addEventListener("click",function (event) {
+            finishVideo(event)
+        })
+    })
+
+    function startVideo(event) {
+        let video = event.target.closest(".videoCustom__wrap");
+        let isVideo = video.querySelector("video")
+        video.classList.add("isActive");
+        isVideo.play()
+    }
+    function finishVideo(event) {
+        let video = event.target.closest(".videoCustom__wrap");
+        let isVideo = video.querySelector("video")
+        video.classList.remove("isActive");
+        isVideo.pause()
+    }
+</script>
+{% schema %}
+{
+    "name": "Video section",
+    "settings": [
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "unit": "px",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "unit": "px",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+        }
+    ],
+    "blocks": [
+        {
+                "name": "Video",
+                "type": "video",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "video",
+                        "label": "Title video"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "poster",
+                        "label": "Poster of video"
+                    }           
+                ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Video opinion"
+        }
+    ]
+}
+{% endschema %}

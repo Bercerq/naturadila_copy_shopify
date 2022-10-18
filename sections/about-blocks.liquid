@@ -1,0 +1,70 @@
+<div class="about-us-blocks"
+  	 data-section-id="{{ section.id }}"
+  	 data-section-type="about-blocks">
+{% if section.blocks.size > 0 %}
+  {% for block in section.blocks %}
+	<div class="about-us-block">
+      {% if block.settings.image != blank %}
+      <div class="image-wrap text-spacing about-us-image">
+        {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="lazyload"
+             data-src="{{ img_url }}"
+             data-widths="[180, 360, 540, 720, 900, 1080]"
+             data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ block.settings.image.alt }}">
+        <noscript>
+          {% assign hs_data_src = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}<img alt="{{ block.settings.image.alt }}" class="lazyloaded lazyload hs-lazyload hs-id-66a0a44b" data-aspectratio="{{ block.settings.image.aspect_ratio }}" data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}" data-widths="[50,90,180,360,480,720,900,1080,1296,1512]" src="{{ block.settings.image | img_url: '400x' }}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+        </noscript>
+      </div>
+      {% endif %}
+      
+      <div class="about-us-text">
+        {% if block.settings.about_block_name != blank %}
+        	<div class="about-us-heading">{{ block.settings.about_block_name }}</div>
+        {% endif %}
+        {% if block.settings.description != blank %}
+        	<div class="about-us-description">{{ block.settings.description }}</div>
+        {% endif %}
+      </div>
+	</div>
+  {% endfor %}
+{% endif %}
+</div>
+{% schema %}
+  {
+    "name": "About Blocks",
+    "class": "about-section",
+    "max_blocks": 10,
+    "blocks": [
+      {
+        "type": "about_block",
+        "name": "About Blok",
+        "settings": [
+          {
+            "type": "text",
+            "id": "about_block_name",
+            "label": "Select Heading for the block",
+            "default": "About us block Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "label": "Text",
+            "default": "<p>Add about us information.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Author's image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  .about-us-image img {
+    opacity: 1 !important;
+  }
+</style>

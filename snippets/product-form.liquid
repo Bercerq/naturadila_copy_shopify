@@ -1,0 +1,184 @@
+{% capture form_id %}AddToCartForm-{{ section_id }}{% endcapture %}
+{% form 'product', product, id: form_id, class: 'product-single__form' %}
+  {% unless product.has_only_default_variant %}
+    {% for option in product.options_with_values %}
+      {% if settings.variant_type == 'button' %}
+        {% include 'variant-button', section_id: section_id, option_drop: option %}
+      {% else %}
+        {% include 'variant-dropdown', section_id: section_id %}
+      {% endif %}
+    {% endfor %}
+  {% endunless %}
+
+  <select id="varId-{{ product.selected_or_first_available_variant.id }}" name="id"  class="product-single__variants no-js">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option {% if variant == product.selected_or_first_available_variant %}
+          selected="selected" {% endif %}
+          value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  {% comment %}
+    {% if settings.quantity_enable %}
+      <div class="product__quantity product__quantity--{{ settings.variant_type }}">
+        {% comment %}
+        <label for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
+        {% endcomment %}
+        <div class="variant-title">
+          {% if product.metafields.quantity.title %}
+              <p class="flavour_title">{{ product.metafields.quantity.title }}</p>
+          {% endif %}
+          {% if product.metafields.quantity.sub_title %}
+              <p class="variant-subtitle">{{ product.metafields.quantity.sub_title }}</p> 
+          {% endif %}
+        </div>
+        {% include 'quantity-input', id: section_id, qty: 1, min: 1 %}
+      </div>
+    {% endif %}
+  {% endcomment %}
+
+  {%- assign inventory_visible = false -%}
+  {%- if settings.inventory_enable and current_variant.inventory_management == 'shopify' -%}
+    {%- if current_variant.inventory_quantity <= settings.inventory_threshold and current_variant.inventory_quantity >= 0 -%}
+      {%- assign inventory_visible = true -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if current_variant.inventory_quantity == 0 -%}
+    {%- assign inventory_visible = false -%}
+  {%- endif -%}
+
+  <div
+    id="ProductInventory-{{ section_id }}"
+    class="product__inventory {% unless inventory_visible %}hide{% endunless %}"
+    >
+    {% if current_variant.available %}
+      {% if current_variant.inventory_quantity <= 10 %}
+        {{ 'products.product.stock_label' | t: count: current_variant.inventory_quantity }}
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {%- if settings.inventory_transfers_enable -%}
+    <div
+      id="ProductIncomingInventory-{{ section_id }}"
+      class="product__inventory{% if inventory_visible %} hide{% endif %}">
+      {%- if current_variant.incoming and inventory_visible == false -%}
+        {%- if current_variant.next_incoming_date -%}
+          {% assign date = current_variant.next_incoming_date | date: format: 'date' %}
+          {%- if current_variant.available -%}
+            {{ 'products.product.will_not_ship_until' | t: date: date }}
+          {%- else -%}
+            {{ 'products.product.will_be_in_stock_after' | t: date: date }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'products.product.waiting_for_stock' | t }}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign enable_dynamic_buttons = false -%}
+  {% if settings.enable_payment_button and template != 'product.preorder' %}
+    {%- assign enable_dynamic_buttons = true -%}
+  {% endif %}
+
+	{% comment %}product__price-wrapper old location{% endcomment %}
+
+  {%- if settings.product_save_amount -%}
+  {%- if settings.product_save_type == 'dollar' -%}
+  {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endcapture %}
+  {%- else -%}
+  {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{% endcapture %}
+  {%- endif -%}
+  <span id="SavePrice-{{ section_id }}" class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
+    {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+  </span>
+  {%- endif -%}
+
+
+  {% if enable_dynamic_buttons %}
+    <div class="payment-buttons" value="1" id="product_quantity-{{ product.selected_or_first_available_variant.id }}">
+  {% endif %}
+
+    <button
+      type="button"
+      name="add"
+      onclick="handleAddToCart(this)"
+      data-inputid="{{ product.selected_or_first_available_variant.id }}"
+      class="btn add-to-cart{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
+      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      <span id="AddToCartText-{{ section_id }}">
+        {% if current_variant.available %}
+          {% if template == 'product.preorder' %}
+            {{ 'products.product.preorder' | t }}
+          {% else %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% endif %}
+        {% else %}
+          {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </span>
+      
+      -
+      
+      <span id="ProductPrice-{{ section_id }}"
+            class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}">
+        {{ current_variant.price | money }}
+      </span>
+    </button>
+    <div class="out_in_stock">Selected product quantity out in stock!</div>
+    {% if enable_dynamic_buttons %}
+      {{ form | payment_button }}
+    {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    </div>
+  {% endif %}
+
+  <div id="VariantsJson-{{ section_id }}" class="hide" aria-hidden="true">
+    {{ product.variants | json }}
+  </div>
+  {% if product.options.size > 1 %}
+    <div id="CurrentVariantJson-{{ section_id }}" class="hide" aria-hidden="true">
+      {{ current_variant | json }}
+    </div>
+  {% endif %}
+
+  <div class="product__price-wrapper">
+    <span id="ProductPrice-{{ section_id }}"
+          class="product__price product__price_hidden{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}">
+      {{ current_variant.price | money }}
+    </span>
+
+    {%- assign hide_sale_price = true -%}
+    {%- if product.compare_at_price_max > product.price -%}
+    {%- if current_variant.compare_at_price > current_variant.price -%}
+    {%- assign hide_sale_price = false -%}
+    {%- endif -%}
+    <span
+          id="PriceA11y-{{ section_id }}"
+          class="visually-hidden"
+          aria-hidden="{{ hide_sale_price }}">
+      {{ 'products.general.regular_price' | t }}
+    </span>
+    <span class="product__price-wrap-{{ section_id }}{% if hide_sale_price %} hide{% endif %}">
+      <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+        {{ current_variant.compare_at_price | money }}
+        {%- endif -%}
+      </span>
+    </span>
+    <span id="ComparePriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+    {% else %}
+    <span id="PriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+    {%- endif -%}
+  </div>
+{% endform %}

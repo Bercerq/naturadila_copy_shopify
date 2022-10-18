@@ -1,0 +1,701 @@
+{% assign hs_product_description = hs_product_description | replace: '<img src="https://', '<img class="lazyload" data-src="https://' | replace: 'src="https://www.youtube.com/', 'class="lazyload" data-src="https://www.youtube.com/' %}
+{%- unless thumbnail_position -%}
+    {%- assign thumbnail_position = 'beside' -%}
+{%- endunless -%}
+
+{%- unless description_style -%}
+    {%- assign description_style = 'full' -%}
+{%- endunless -%}
+
+<style>
+
+    @media screen and (min-width: 1050px){
+        .page-content--product .grid{
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .page-content--product .grid__item{
+            float: unset;
+        }
+
+        .page-content--product .grid__item.widescreen--one-half:first-child{
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .main-content {
+            overflow: unset;
+            position: relative;
+        }
+        /*.grid__item.widescreen--one-half:first-child{*/
+        /*    position: initial;*/
+        /*}*/
+    }
+
+    @media (min-width: 768px) and (max-width: 1049px){
+        .page-content--product .widescreen--one-half .product-single__meta{
+            padding-left: 0;
+        }
+    }
+
+    @media(max-width: 1049px){
+        .page-content--product .new-form-option{
+            margin-bottom: 25px !important;
+        }
+    }
+
+</style>
+
+{%- assign product_img_structure = product.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+<div id="ProductSection-{{ section_id }}"
+     class="product-section"
+     data-section-id="{{ section_id }}"
+     data-section-type="product-template"
+     data-product-handle="{{ product.handle }}"
+     data-product-url="{{ product.url | within: collection }}"
+     data-aspect-ratio="{{ 100 | divided_by: product.featured_media.aspect_ratio }}"
+     data-img-url="{{ product_img_structure }}"
+        {% if settings.product_zoom_enable %}
+            data-image-zoom="true"
+        {% endif %}
+        {% if settings.inventory_enable %}
+            data-inventory="true"
+        {% endif %}
+        {% if settings.inventory_transfers_enable %}
+            data-incoming-inventory="true"
+        {% endif %}
+{% unless isModal %}
+    data-enable-history-state="true"
+        {% endunless %}>
+
+    {%- include 'product-template-variables' -%}
+
+    <div class="page-content page-content--product">
+        <div class="page-width">
+
+            <div class="grid{% unless image_position == 'left' %} grid--product-images-right{% endunless %}">
+                {%- if image_position == 'left' -%}
+                    <div class="grid__item {{ product_image_width }}">
+                        {% include 'product-images',
+                                section_id: section_id,
+                                isModal: isModal,
+                                thumbnail_arrows: thumbnail_arrows,
+                                thumbnail_position: thumbnail_position,
+                                video_looping: video_looping,
+                                video_style: video_style
+                        %}
+
+                        <div class="ekomi-widget-product-container desktop">
+                            <p class="heading">{{ 'products.product.reviews_title' | t }}</p>
+                            <div class="ekomi-widget-content">
+                                <div>
+                                    <div class="ekomi-widget-logo">
+                                        <a href="https://www.ekomi.es/testimonios-naturadika.es.html" target="_blank">
+                                            <img alt="naturadika.es Reviews with ekomi.es"
+                                                 src="https://cdn.shopify.com/s/files/1/0271/4101/3538/files/ekomi_gold-2.png?v=1642496874"/>
+                                        </a>
+                                    </div>
+                                    <div id="widget-container"
+                                         class="data-ekomi-emp ekomi-widget-container ekomi-widget-sf14113861e17c61f22a8"></div>
+                                    <div id="ekomi-product-widget-identifier" class="prod-data-emp"
+                                         style="visibility: hidden;height: 0;">{{ product.id }}</div>
+                                </div>
+                                <div class="btn-container">
+                                    <div class='see-more-btn'>{{ 'products.product.reviews_see_more' | t }}</span><span
+                                                class='arrow'>--- &gt;</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript">
+                            function registerWidget(w, token) {
+                                w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+                                w['_customerId'] = 141138;
+                                if (w['_language'] == undefined) {
+                                    w['_language'] = new Array();
+                                }
+                                w['_language'][token] = 'es';
+                                w['_schema_fields'] = [];
+
+                                if (typeof (w['_ekomiWidgetTokens']) !== 'undefined') {
+                                    w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+                                } else {
+                                    w['_ekomiWidgetTokens'] = new Array(token);
+                                }
+                                if (typeof (ekomiWidgetJs) == 'undefined') {
+                                    ekomiWidgetJs = true;
+                                    var scr = document.createElement('script');
+                                    scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+                                    var head = document.getElementsByTagName('head')[0];
+                                    head.appendChild(scr);
+
+                                }
+                                return true;
+                            }
+
+                            (function (w) {
+                                var token = 'sf14113861e17c61f22a8';
+                                var k = document.getElementsByClassName("ekomi-widget-" + token);
+                                for (var x = 0; x < k.length; x++) {
+                                    registerWidget(w, token);
+                                }
+                            })(window);
+                        </script>
+
+
+                    </div>
+                {%- endif -%}
+
+                <div class="grid__item {{ product_description_width }}">
+
+                    <div class="product-single__meta">
+
+                        {%- if settings.vendor_enable -%}
+                            <div class="product-single__vendor">
+                                {%- assign vendor_handle = product.vendor | handleize -%}
+                                {%- if collections[vendor_handle] != empty -%}
+                                    <a href="{{ routes.collections_url }}/{{ collections[vendor_handle].handle }}">
+                                        {{ collections[vendor_handle].title }}
+                                    </a>
+                                {%- else -%}
+                                    {{ product.vendor | link_to_vendor }}
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+
+                        {{ product.metafields.product-title.product-single__sub-title }}
+
+                        {%- if isModal -%}
+                            <p class="h2 product-single__title">
+                                {{ product.title }}
+                            </p>
+                        {% else %}
+                            <h2 class="h2 product-single__title">
+                                {{ product.title }}
+                            </h2>
+                        {%- endif -%}
+
+                        {% comment %}
+                        {%- if settings.enable_product_reviews and settings.reviews_layout == 'full' -%}
+                        {%- if isModal -%}
+                        {%- assign review_link = product.url | within: collection | append: '#Reviews-' | append: product.id -%}
+                        {% else %}
+                        {%- assign review_link = '#Reviews-' | append: product.id -%}
+                        {%- endif -%}
+                        <a href="{{ review_link }}" class="product-single__review-link">
+                          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                        </a>
+                        {%- endif -%}
+                        {% endcomment %}
+
+                        {%- if settings.sku_enable -%}
+                            <p id="Sku-{{ section_id }}" class="product-single__sku">
+                                {%- if current_variant.sku -%}
+                                    {{ current_variant.sku }}
+                                {%- endif -%}
+                            </p>
+                        {%- endif -%}
+
+                        {% comment %}
+                        {% include 'pagantis' %}
+                        {% endcomment %}
+
+                        <div class="product__unit-price product__unit-price--spacing product__unit-price-wrapper--{{ section_id }}{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
+                            {%- capture unit_price_base_unit -%}
+                                <span class="product__unit-base--{{ section_id }}">
+                {%- if current_variant.unit_price_measurement -%}
+                    {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                        {{ current_variant.unit_price_measurement.reference_value }}
+                    {%- endif -%}
+                    {{ current_variant.unit_price_measurement.reference_unit }}
+                {%- endif -%}
+              </span>
+                            {%- endcapture -%}
+
+                            <span class="product__unit-price--{{ section_id }}">{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
+                        </div>
+
+                        <div class="product-single__description rte">
+                            {{ product.metafields.custom.short_description }}
+                            {% comment %}
+                            {{ hs_product_description }}
+                            {% endcomment %}
+                        </div>
+
+                        {{ product.metafields.content.partners-links }}
+
+                        {%- if section.settings.policies_enable -%}
+                            {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+                                <div class="product__policies rte small--text-center">
+                                    <small>
+                                        {%- if shop.taxes_included -%}
+                                            {{ 'products.product.include_taxes' | t }}
+                                        {%- endif -%}
+                                        {%- if shop.shipping_policy.body != blank -%}
+                                            {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                                        {%- endif -%}
+                                    </small>
+                                </div>
+                            {%- endif -%}
+                        {%- endif -%}
+
+                        {%- if settings.inventory_enable or settings.inventory_transfers_enable -%}
+                            {%- assign variants_with_inventory_tracking = product.variants | where: 'inventory_management', 'shopify' -%}
+
+                            <script>
+                                // Store inventory quantities in JS because they're no longer
+                                // available directly in JS when a variant changes.
+                                // Have an object that holds all potential products so it works
+                                // with quick view or with multiple featured products.
+                                window.inventories = window.inventories || {};
+                                window.inventories['{{ section_id }}'] = {};
+                                {% for variant in variants_with_inventory_tracking %}
+                                window.inventories['{{ section_id }}'][{{ variant.id }}] = {
+                                    'quantity': {{ variant.inventory_quantity | default: 0 }},
+                                    'incoming': {{ variant.incoming | default: false | json }},
+                                    'next_incoming_date': {{ variant.next_incoming_date | date: format: 'date' | json }}
+                                };
+                                {% endfor %}
+                            </script>
+
+                            {% comment %}
+                            If loaded in quick view, it might be from a JS-loaded function
+                            that loads recommended products. If that's the case, the above
+                            JS will not set the variant inventory. Add it to an accessible
+                            data div to read later instead.
+                            {% endcomment %}
+                        {%- if isModal -%}
+                            <div
+                                    data-section-id="{{ section_id }}"
+                                    class="hide js-product-inventory-data"
+                                    aria-hidden="true"
+                            >
+                                {%- for variant in variants_with_inventory_tracking -%}
+                                    <div
+                                            class="js-variant-inventory-data"
+                                            data-id="{{ variant.id }}"
+                                            data-quantity="{{ variant.inventory_quantity | default: 0 }}"
+                                            data-incoming="{{ variant.incoming | default: false | json }}"
+                                            data-date="{{ variant.next_incoming_date | date: format: 'date' | json }}"
+                                            data-price="{{ variant.price | money }}"
+                                    >
+                                    </div>
+                                {%- endfor -%}
+                            </div>
+                        {%- endif -%}
+                        {%- endif -%}
+
+                        {%- unless isModal -%}
+                            {% comment %}
+                            Shopify's product form attaches a number of tracking
+                            scripts that cause slower load times and false statistics.
+                            Quick view modals request these on-demand.
+                            {% endcomment %}
+                            {% include 'product-form', section_id: section_id %}
+                        {%- else -%}
+                            <div
+                                    id="ProductFormHolder-{{ section_id }}"
+                                    class="product-form-holder"
+                                    data-url="{{ product.url }}"
+                                    data-template="{{ product.template_suffix }}"></div>
+                        {%- endunless -%}
+
+                        {%- comment -%}
+                        {{ product.metafields.content.trust-icons }}
+                        {%- endcomment -%}
+                        {%- comment -%}
+                        <div class="product-highlights-features desktop-only">
+                          {{ product.metafields.content.highlights }}
+                        </div>
+                        {%- endcomment -%}
+
+                        {%- comment -%}
+                        {% if product.metafields.content.after-product-bullets != blank %}
+                        <div class="after-product-bullets-wrapper mobile-only">
+                          {{ product.metafields.content.after-product-bullets }}
+                        </div>
+                        {% endif %}
+                        {%- endcomment -%}
+                        {%- comment -%}
+                        <div class="custom-scroll-section">
+                          {{ product.metafields.content.scroll-text }}
+                        </div>
+                        </div>
+                        {%- endcomment -%}
+                        {% if product.metafields.custom.scroll_text != blank %}
+                            <div class="custom-scroll-section">
+                                <div class="scroll__text-container">
+                                    <div class="scrolled--wrapper">
+                                        <div class="scrolled--slider swiper">
+                                            <div class="swiper-wrapper ">
+                                                {%- assign values = product.metafields.custom.scroll_text | split: ';' -%}
+                                                {% for value in values %}
+                                                    <div class="scroll-element-item scrolled--slider__item swiper-slide">
+                                                        {% assign bloks = value | split: "@" %}
+                                                        {% for key in bloks %}
+                                                            {% assign mod = forloop.index | modulo: 2 %}
+                                                            {% if mod == 1 %}
+                                                                <span class="scroll-element-img">{{ key }}</span>
+                                                            {%- else -%}
+                                                                <span class="scroll-element-text">{{ key }}</span>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {%- comment -%}
+                        <div class="wrap-image-block">
+                          {{ product.metafields.content.img-container }}
+                        </div>
+                        {%- endcomment -%}
+                        {% if product.metafields.custom.img_content != blank %}
+                            <div class="wrap-image-block">
+                                <div class="custom-container-image">
+                                    {%- assign images = product.metafields.custom.img_content.value -%}
+                                    {% for image in images %}
+                                        <div class="wrap-img">
+                                            <img src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="ekomi-widget-product-container mobile">
+                            <p class="heading">{{ 'products.product.reviews_title' | t }}</p>
+                            <div class="ekomi-widget-content">
+                                <div>
+                                    <div class="ekomi-widget-logo">
+                                        <a href="https://www.ekomi.es/testimonios-naturadika.es.html" target="_blank">
+                                            <img alt="naturadika.es Reviews with ekomi.es"
+                                                 src="https://cdn.shopify.com/s/files/1/0271/4101/3538/files/ekomi_gold-2.png?v=1642496874"/>
+                                        </a>
+                                    </div>
+                                    <div id="widget-container"
+                                         class="data-ekomi-emp ekomi-widget-container ekomi-widget-sf14113861e17c61f22a8"></div>
+                                    <div id="ekomi-product-widget-identifier" class="prod-data-emp"
+                                         style="visibility: hidden;height: 0;">{{ product.id }}</div>
+                                </div>
+                                <div class="btn-container">
+                                    <div class='see-more-btn'>{{ 'products.product.reviews_see_more' | t }}</span><span
+                                                class='arrow'>--- &gt;</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript">
+                            function registerWidget(w, token) {
+                                w['_ekomiWidgetsServerUrl'] = 'https://widgets.ekomi.com';
+                                w['_customerId'] = 141138;
+                                if (w['_language'] == undefined) {
+                                    w['_language'] = new Array();
+                                }
+                                w['_language'][token] = 'es';
+                                w['_schema_fields'] = [];
+
+                                if (typeof (w['_ekomiWidgetTokens']) !== 'undefined') {
+                                    w['_ekomiWidgetTokens'][w['_ekomiWidgetTokens'].length] = token;
+                                } else {
+                                    w['_ekomiWidgetTokens'] = new Array(token);
+                                }
+                                if (typeof (ekomiWidgetJs) == 'undefined') {
+                                    ekomiWidgetJs = true;
+                                    var scr = document.createElement('script');
+                                    scr.src = 'https://sw-assets.ekomiapps.de/static_resources/widget.js';
+                                    var head = document.getElementsByTagName('head')[0];
+                                    head.appendChild(scr);
+
+                                }
+                                return true;
+                            }
+
+                            (function (w) {
+                                var token = 'sf14113861e17c61f22a8';
+                                var k = document.getElementsByClassName("ekomi-widget-" + token);
+                                for (var x = 0; x < k.length; x++) {
+                                    registerWidget(w, token);
+                                }
+                            })(window);
+                        </script>
+
+                        {%- if settings.trust_image != blank -%}
+                            <div class="aos-animate trust-image" style="max-width: {{ settings.trust_image.width }}px;">
+                                <div class="image-wrap "
+                                     style="height: 0; padding-bottom: {{ 100 | divided_by: settings.trust_image.aspect_ratio }}%;">
+                                    {%- assign img_url = settings.trust_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                    <img class="lazyload"
+                                         data-src="{{ img_url }}"
+                                         data-widths="[360, 540]"
+                                         data-aspectratio="{{ settings.trust_image.aspect_ratio }}"
+                                         data-sizes="auto"
+                                         alt="{{ settings.trust_image.alt }}">
+                                    <noscript>
+                                        {% assign hs_data_src = settings.trust_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                        <img alt="{{ settings.trust_image.alt }}"
+                                             class="lazyloaded lazyload hs-lazyload hs-id-68fe7cfd"
+                                             data-aspectratio="{{ settings.trust_image.aspect_ratio }}"
+                                             data-parent-fit="contain" data-sizes="auto" data-src="{{ hs_data_src }}"
+                                             data-widths="[50,90,180,360,480,720,900,1080,1296,1512]"
+                                             src="{{ settings.trust_image | img_url: '540x' }}"
+                                             srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                                    </noscript>
+                                </div>
+                            </div>
+                        {%- endif -%}
+
+                        {%- unless description_style == 'full' -%}
+                            {%- comment -%}
+                            <div class="product-single__description rte">
+                              {{ hs_product_description }}
+                            </div>
+                            {%- endcomment -%}
+
+                            {% comment %}
+                            {% include 'product-additional-content', section_id: section_id %}
+                            {% endcomment %}
+
+                        {%- endunless -%}
+
+                        {%- if social -%}
+                            {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+                        {%- endif -%}
+                    </div>
+
+                </div>
+
+                {%- unless image_position == 'left' -%}
+                    <div class="grid__item {{ product_image_width }}">
+                        {% include 'product-images', section_id: section_id, isModal: isModal, thumbnail_position: thumbnail_position, thumbnail_arrows: thumbnail_arrows %}
+                    </div>
+                {%- endunless -%}
+            </div>
+
+            {%- if description_style == 'full' -%}
+                <div class="product-single__description-full rte">
+                    {{ hs_product_description }}
+                </div>
+
+                {% include 'product-additional-content', section_id: section_id %}
+            {%- endif -%}
+        </div>
+
+        {%- comment -%}
+        <div class="product-highlights-features mobile-only">
+          {{ product.metafields.content.highlights }}
+        </div>
+        {%- endcomment -%}
+
+        {%- comment -%}
+        {% if product.metafields.content.after-product-bullets != blank %}
+        <div class="after-product-bullets-wrapper desktop-only">
+          {{ product.metafields.content.after-product-bullets }}
+        </div>
+        {% endif %}
+        {%- endcomment -%}
+
+    </div>
+</div>
+
+{%- comment -%}
+ <div class="scroll__text-containers">
+                <div class="scroll__text-container">
+                    <div class="scroll-parent">
+                        <div class="scroll-element primary">
+                          <div class="scroll-element-item scrolled--slider__item swiper-slide">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.25 6.375H14.5V2.75H1.8125C0.8125 2.75 0 3.5625 0 4.5625V14.5625H1.8125C1.8125 16.0625 3 17.3125 4.5625 17.3125C6.125 17.3125 7.3125 16.125 7.3125 14.5625H12.75C12.75 16.0625 13.9375 17.3125 15.5 17.3125C17.0625 17.3125 18.25 16.125 18.25 14.5625H20V10L17.25 6.375ZM4.5625 15.9375C3.8125 15.9375 3.1875 15.3125 3.1875 14.5625C3.1875 13.8125 3.8125 13.1875 4.5625 13.1875C5.3125 13.1875 5.9375 13.8125 5.9375 14.5625C5.9375 15.3125 5.3125 15.9375 4.5625 15.9375ZM16.8125 7.75L18.625 10H14.5625V7.75H16.8125ZM15.4375 15.9375C14.6875 15.9375 14.0625 15.3125 14.0625 14.5625C14.0625 13.8125 14.6875 13.1875 15.4375 13.1875C16.1875 13.1875 16.8125 13.8125 16.8125 14.5625C16.8125 15.3125 16.1875 15.9375 15.4375 15.9375Z" fill="#666666"/>
+                                <path d="M13.125 11.9375H1.625V5.0625C1.625 4.5625 2 4.1875 2.5 4.1875H13.125V11.9375Z" fill="white"/>
+                              </svg>                              
+                            </span>
+                            <span class="scroll-element-text">
+                              Envío Gratis a partir de 35€
+                            </span>
+                          </div>
+                          <div class="scroll-element-item scrolled--slider__item swiper-slide">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_3981_1637)">
+                                <path d="M14.3 17.6651C13.7192 17.353 13.1688 16.9842 12.6563 16.5639C12.133 16.138 11.661 15.6494 11.25 15.1084C10.8407 14.5731 10.5062 13.9813 10.2563 13.3503C10.0055 12.7121 9.8781 12.0295 9.88126 11.341V7.97925H11.0125C11.3489 7.98026 11.6851 7.95874 12.0188 7.91485C12.3283 7.88082 12.627 7.77752 12.8938 7.61217C13.5133 7.24051 14.2208 7.05324 14.9375 7.0712C15.3008 7.06857 15.6627 7.11843 16.0125 7.21932C16.3607 7.32065 16.6947 7.46784 17.0063 7.65725C17.2766 7.81865 17.5768 7.91959 17.8875 7.95349C18.2275 7.99759 18.5699 8.0191 18.9125 8.01789H20V11.3796C20.0037 12.0724 19.8763 12.7592 19.625 13.4018C19.3751 14.0322 19.0383 14.6221 18.625 15.1535C18.208 15.6894 17.7319 16.1735 17.2063 16.5961C16.6923 17.0162 16.1421 17.387 15.5625 17.7038L14.9375 18.0451L14.3 17.6651ZM11.3625 11.341C11.3581 11.8795 11.4646 12.4129 11.675 12.9059C11.8872 13.4022 12.1648 13.8659 12.5 14.2841C12.8469 14.7138 13.2388 15.1025 13.6688 15.4433C14.0608 15.7615 14.479 16.0438 14.9188 16.2869C15.3578 16.0426 15.7759 15.7603 16.1688 15.4433C16.613 15.1063 17.0178 14.7173 17.375 14.2841C17.71 13.8645 17.9895 13.4011 18.2063 12.9059C18.4139 12.412 18.5203 11.8792 18.5188 11.341V9.51199C18.141 9.50516 17.7646 9.46422 17.3938 9.38963C16.9907 9.29993 16.6044 9.14333 16.25 8.92594C16.0537 8.80865 15.8437 8.71774 15.625 8.65546C15.189 8.55238 14.736 8.55238 14.3 8.65546C14.08 8.71066 13.8693 8.79967 13.675 8.9195C13.3035 9.13827 12.9005 9.29479 12.4813 9.38319C12.1105 9.45927 11.7342 9.50236 11.3563 9.51199L11.3625 11.341ZM1.36251 14.2519C1.17887 14.2572 0.996074 14.2243 0.825015 14.1553C0.579466 14.0485 0.370092 13.8692 0.223277 13.64C0.076463 13.4108 -0.00122129 13.1419 1.45184e-05 12.8673C0.00193162 12.7464 0.0123758 12.6259 0.0312645 12.5066C0.0515105 12.3758 0.0807508 12.2467 0.118765 12.1202C0.153538 11.9887 0.201723 11.8613 0.262515 11.7403C0.317188 11.6228 0.391201 11.5161 0.481265 11.4247L2.50001 9.35099V-0.0128784H17.5625V6.42719L17.375 6.31771C17.1889 6.21292 16.9944 6.12459 16.7938 6.05367C16.5875 5.98283 16.3813 5.91843 16.1688 5.86691H16.075V1.53274H3.95626V8.90662H8.58126V10.4329H3.52501L1.57501 12.4358C1.54987 12.4942 1.52898 12.5545 1.51251 12.6161C1.50948 12.6504 1.50948 12.6849 1.51251 12.7191H8.75001V12.8222C8.84058 13.2511 8.97249 13.6696 9.14376 14.0716L9.21876 14.2519H1.36251Z" fill="#666666"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_3981_1637">
+                                <rect width="20" height="18" fill="white"/>
+                                </clipPath>
+                                </defs>
+                              </svg>                            
+                            </span>
+                            <span class="scroll-element-text">
+                              Compra segura y Pago Cifrado 
+                            </span>
+                          </div>
+                          <div class="scroll-element-item scrolled--slider__item swiper-slide">
+                            <span class="scroll-element-img">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.6818 9.28881L13.5962 9.48527C13.2994 10.7388 12.5862 11.8516 11.5756 12.6382C10.5649 13.4247 9.31789 13.8374 8.0425 13.8075C6.66493 13.7874 5.34018 13.2687 4.30891 12.3458L5.60011 11.4263L0.824219 9.18665L1.27536 14.3576L2.36433 13.6189C3.10988 14.3711 3.99549 14.9667 4.97006 15.3713C5.94463 15.776 6.98886 15.9816 8.0425 15.9764C9.87539 16.0322 11.6689 15.432 13.1063 14.2817C14.5437 13.1314 15.5327 11.505 15.8986 9.68959L15.9997 9.29666L13.6818 9.28881Z" fill="#666666"/>
+                                <path d="M2.41114 6.78978C2.6346 5.82358 3.1013 4.93208 3.76601 4.20166C4.43073 3.47125 5.27092 2.92669 6.20516 2.62076C7.13941 2.31482 8.13604 2.25789 9.09847 2.45548C10.0609 2.65306 10.9565 3.09846 11.6985 3.74852L10.3995 4.63654L15.1831 6.5776L14.7476 1.56385L13.643 2.3497C12.6086 1.31739 11.3164 0.587991 9.90398 0.239254C8.49158 -0.109483 7.01199 -0.0644901 5.62291 0.369437C4.23383 0.803363 2.98732 1.60996 2.01625 2.70326C1.04517 3.79656 0.385918 5.13558 0.10876 6.5776L-0.03125 7.222H2.30225L2.41114 6.78978Z" fill="#666666"/>
+                              </svg>                                                          
+                            </span>
+                            <span class="scroll-element-text">
+                              Devoluciones Gratis durante 30 días 
+                            </span>
+                          </div>
+                          <div class="scroll-element-item scrolled--slider__item swiper-slide">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.25 6.375H14.5V2.75H1.8125C0.8125 2.75 0 3.5625 0 4.5625V14.5625H1.8125C1.8125 16.0625 3 17.3125 4.5625 17.3125C6.125 17.3125 7.3125 16.125 7.3125 14.5625H12.75C12.75 16.0625 13.9375 17.3125 15.5 17.3125C17.0625 17.3125 18.25 16.125 18.25 14.5625H20V10L17.25 6.375ZM4.5625 15.9375C3.8125 15.9375 3.1875 15.3125 3.1875 14.5625C3.1875 13.8125 3.8125 13.1875 4.5625 13.1875C5.3125 13.1875 5.9375 13.8125 5.9375 14.5625C5.9375 15.3125 5.3125 15.9375 4.5625 15.9375ZM16.8125 7.75L18.625 10H14.5625V7.75H16.8125ZM15.4375 15.9375C14.6875 15.9375 14.0625 15.3125 14.0625 14.5625C14.0625 13.8125 14.6875 13.1875 15.4375 13.1875C16.1875 13.1875 16.8125 13.8125 16.8125 14.5625C16.8125 15.3125 16.1875 15.9375 15.4375 15.9375Z" fill="#666666"/>
+                                <path d="M13.125 11.9375H1.625V5.0625C1.625 4.5625 2 4.1875 2.5 4.1875H13.125V11.9375Z" fill="white"/>
+                              </svg>                              
+                            </span>
+                            <span class="scroll-element-text">
+                              Envío Gratis a partir de 35€
+                            </span>
+                          </div>
+                        </div>
+                        <div class="scroll-element secondary">
+                          <div class="scroll-element-item">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.25 6.375H14.5V2.75H1.8125C0.8125 2.75 0 3.5625 0 4.5625V14.5625H1.8125C1.8125 16.0625 3 17.3125 4.5625 17.3125C6.125 17.3125 7.3125 16.125 7.3125 14.5625H12.75C12.75 16.0625 13.9375 17.3125 15.5 17.3125C17.0625 17.3125 18.25 16.125 18.25 14.5625H20V10L17.25 6.375ZM4.5625 15.9375C3.8125 15.9375 3.1875 15.3125 3.1875 14.5625C3.1875 13.8125 3.8125 13.1875 4.5625 13.1875C5.3125 13.1875 5.9375 13.8125 5.9375 14.5625C5.9375 15.3125 5.3125 15.9375 4.5625 15.9375ZM16.8125 7.75L18.625 10H14.5625V7.75H16.8125ZM15.4375 15.9375C14.6875 15.9375 14.0625 15.3125 14.0625 14.5625C14.0625 13.8125 14.6875 13.1875 15.4375 13.1875C16.1875 13.1875 16.8125 13.8125 16.8125 14.5625C16.8125 15.3125 16.1875 15.9375 15.4375 15.9375Z" fill="#666666"/>
+                                <path d="M13.125 11.9375H1.625V5.0625C1.625 4.5625 2 4.1875 2.5 4.1875H13.125V11.9375Z" fill="white"/>
+                              </svg>                              
+                            </span>
+                            <span class="scroll-element-text">
+                              Envío Gratis a partir de 35€
+                            </span>
+                          </div>
+                          <div class="scroll-element-item">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_3981_1637)">
+                                <path d="M14.3 17.6651C13.7192 17.353 13.1688 16.9842 12.6563 16.5639C12.133 16.138 11.661 15.6494 11.25 15.1084C10.8407 14.5731 10.5062 13.9813 10.2563 13.3503C10.0055 12.7121 9.8781 12.0295 9.88126 11.341V7.97925H11.0125C11.3489 7.98026 11.6851 7.95874 12.0188 7.91485C12.3283 7.88082 12.627 7.77752 12.8938 7.61217C13.5133 7.24051 14.2208 7.05324 14.9375 7.0712C15.3008 7.06857 15.6627 7.11843 16.0125 7.21932C16.3607 7.32065 16.6947 7.46784 17.0063 7.65725C17.2766 7.81865 17.5768 7.91959 17.8875 7.95349C18.2275 7.99759 18.5699 8.0191 18.9125 8.01789H20V11.3796C20.0037 12.0724 19.8763 12.7592 19.625 13.4018C19.3751 14.0322 19.0383 14.6221 18.625 15.1535C18.208 15.6894 17.7319 16.1735 17.2063 16.5961C16.6923 17.0162 16.1421 17.387 15.5625 17.7038L14.9375 18.0451L14.3 17.6651ZM11.3625 11.341C11.3581 11.8795 11.4646 12.4129 11.675 12.9059C11.8872 13.4022 12.1648 13.8659 12.5 14.2841C12.8469 14.7138 13.2388 15.1025 13.6688 15.4433C14.0608 15.7615 14.479 16.0438 14.9188 16.2869C15.3578 16.0426 15.7759 15.7603 16.1688 15.4433C16.613 15.1063 17.0178 14.7173 17.375 14.2841C17.71 13.8645 17.9895 13.4011 18.2063 12.9059C18.4139 12.412 18.5203 11.8792 18.5188 11.341V9.51199C18.141 9.50516 17.7646 9.46422 17.3938 9.38963C16.9907 9.29993 16.6044 9.14333 16.25 8.92594C16.0537 8.80865 15.8437 8.71774 15.625 8.65546C15.189 8.55238 14.736 8.55238 14.3 8.65546C14.08 8.71066 13.8693 8.79967 13.675 8.9195C13.3035 9.13827 12.9005 9.29479 12.4813 9.38319C12.1105 9.45927 11.7342 9.50236 11.3563 9.51199L11.3625 11.341ZM1.36251 14.2519C1.17887 14.2572 0.996074 14.2243 0.825015 14.1553C0.579466 14.0485 0.370092 13.8692 0.223277 13.64C0.076463 13.4108 -0.00122129 13.1419 1.45184e-05 12.8673C0.00193162 12.7464 0.0123758 12.6259 0.0312645 12.5066C0.0515105 12.3758 0.0807508 12.2467 0.118765 12.1202C0.153538 11.9887 0.201723 11.8613 0.262515 11.7403C0.317188 11.6228 0.391201 11.5161 0.481265 11.4247L2.50001 9.35099V-0.0128784H17.5625V6.42719L17.375 6.31771C17.1889 6.21292 16.9944 6.12459 16.7938 6.05367C16.5875 5.98283 16.3813 5.91843 16.1688 5.86691H16.075V1.53274H3.95626V8.90662H8.58126V10.4329H3.52501L1.57501 12.4358C1.54987 12.4942 1.52898 12.5545 1.51251 12.6161C1.50948 12.6504 1.50948 12.6849 1.51251 12.7191H8.75001V12.8222C8.84058 13.2511 8.97249 13.6696 9.14376 14.0716L9.21876 14.2519H1.36251Z" fill="#666666"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_3981_1637">
+                                <rect width="20" height="18" fill="white"/>
+                                </clipPath>
+                                </defs>
+                              </svg>                            
+                            </span>
+                            <span class="scroll-element-text">
+                              Compra segura y Pago Cifrado 
+                            </span>
+                          </div>
+                          <div class="scroll-element-item">
+                            <span class="scroll-element-img">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.6818 9.28881L13.5962 9.48527C13.2994 10.7388 12.5862 11.8516 11.5756 12.6382C10.5649 13.4247 9.31789 13.8374 8.0425 13.8075C6.66493 13.7874 5.34018 13.2687 4.30891 12.3458L5.60011 11.4263L0.824219 9.18665L1.27536 14.3576L2.36433 13.6189C3.10988 14.3711 3.99549 14.9667 4.97006 15.3713C5.94463 15.776 6.98886 15.9816 8.0425 15.9764C9.87539 16.0322 11.6689 15.432 13.1063 14.2817C14.5437 13.1314 15.5327 11.505 15.8986 9.68959L15.9997 9.29666L13.6818 9.28881Z" fill="#666666"/>
+                                <path d="M2.41114 6.78978C2.6346 5.82358 3.1013 4.93208 3.76601 4.20166C4.43073 3.47125 5.27092 2.92669 6.20516 2.62076C7.13941 2.31482 8.13604 2.25789 9.09847 2.45548C10.0609 2.65306 10.9565 3.09846 11.6985 3.74852L10.3995 4.63654L15.1831 6.5776L14.7476 1.56385L13.643 2.3497C12.6086 1.31739 11.3164 0.587991 9.90398 0.239254C8.49158 -0.109483 7.01199 -0.0644901 5.62291 0.369437C4.23383 0.803363 2.98732 1.60996 2.01625 2.70326C1.04517 3.79656 0.385918 5.13558 0.10876 6.5776L-0.03125 7.222H2.30225L2.41114 6.78978Z" fill="#666666"/>
+                              </svg>                                                          
+                            </span>
+                            <span class="scroll-element-text">
+                              Devoluciones Gratis durante 30 días 
+                            </span>
+                          </div>
+                          <div class="scroll-element-item">
+                            <span class="scroll-element-img">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.25 6.375H14.5V2.75H1.8125C0.8125 2.75 0 3.5625 0 4.5625V14.5625H1.8125C1.8125 16.0625 3 17.3125 4.5625 17.3125C6.125 17.3125 7.3125 16.125 7.3125 14.5625H12.75C12.75 16.0625 13.9375 17.3125 15.5 17.3125C17.0625 17.3125 18.25 16.125 18.25 14.5625H20V10L17.25 6.375ZM4.5625 15.9375C3.8125 15.9375 3.1875 15.3125 3.1875 14.5625C3.1875 13.8125 3.8125 13.1875 4.5625 13.1875C5.3125 13.1875 5.9375 13.8125 5.9375 14.5625C5.9375 15.3125 5.3125 15.9375 4.5625 15.9375ZM16.8125 7.75L18.625 10H14.5625V7.75H16.8125ZM15.4375 15.9375C14.6875 15.9375 14.0625 15.3125 14.0625 14.5625C14.0625 13.8125 14.6875 13.1875 15.4375 13.1875C16.1875 13.1875 16.8125 13.8125 16.8125 14.5625C16.8125 15.3125 16.1875 15.9375 15.4375 15.9375Z" fill="#666666"/>
+                                <path d="M13.125 11.9375H1.625V5.0625C1.625 4.5625 2 4.1875 2.5 4.1875H13.125V11.9375Z" fill="white"/>
+                              </svg>                              
+                            </span>
+                            <span class="scroll-element-text">
+                              Envío Gratis a partir de 35€
+                            </span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+{%- endcomment -%}
+<script type="application/json" class="product_object">
+    {
+        "product": {{ product | json }}
+     }
+</script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let scrolledText = new Swiper('.scrolled--slider', {
+            spaceBetween: 30,
+            // loopedSlides: 1,
+            // loopAdditionalSlides: 0,
+            centeredSlides: true,
+            speed: 6000,
+            autoplay: {
+                delay: 1,
+            },
+            loop: true,
+            slidesPerView: 'auto',
+            disableOnInteraction: true
+        });
+        // new option
+
+        const optionsVariants = document.querySelectorAll('.new-form-option');
+        const optionsMedia = document.querySelectorAll('.image-wrap')
+        const imagesWrap = JSON.parse(document.querySelector('script.product_object').innerHTML).product.variants;
+        const selectedVariant = document.querySelector('.product-single__variants.no-js');
+
+        optionsVariants.forEach((option) => {
+            option.addEventListener('click', function () {
+                imagesWrap.forEach((image)=>{
+                    if(image.id === parseInt(option.dataset.id) && image.featured_image !== null) {
+                        optionsMedia.forEach((media)=>{
+                            if(image.featured_media.id === parseInt(media.dataset.media)){
+                                let number = media.closest('.slick-slide').dataset.slickIndex
+                                $('.slick-slider').slick('slickGoTo', number);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        window.addEventListener('load', function (){
+            imagesWrap.forEach((image) => {
+                if(image.id === parseInt(selectedVariant.value) && image.featured_image !== null) {
+                    optionsMedia.forEach((media)=>{
+                        if(image.featured_media.id === parseInt(media.dataset.media)){
+                            let number = media.closest('.slick-slide').dataset.slickIndex
+                            $('.slick-slider').slick('slickGoTo', number);
+                        }
+                    });
+                }
+            });
+        });
+    });
+    let timer = setInterval(myFunction, 1000);
+
+    function myFunction() {
+        if (document.querySelectorAll(".new-form-option .value-left")) {
+            clearInterval(timer);
+            let priceInputText = document.querySelector(".new-form-option.selectedWB").querySelector(".first-price-WB");
+            let btnAddtoCartCurrent = document.querySelector("#new-form-atc");
+            let btnAddtoCartText = document.querySelector("#new-form-atc").innerHTML;
+
+            btnAddtoCartCurrent.innerHTML = btnAddtoCartCurrent.innerHTML + " - " + priceInputText.innerHTML;
+
+
+            let arrPrice = document.querySelectorAll(".new-form-option");
+            arrPrice.forEach((elem, index) => {
+                elem.addEventListener("click", function () {
+                    let btnAddtoCart = document.querySelector("#new-form-atc");
+                    let priceInput = document.querySelector(".new-form-option.selectedWB").querySelector(".first-price-WB");
+                    btnAddtoCart.innerHTML = btnAddtoCartText + " - " + priceInput.innerHTML;
+                })
+
+            })
+
+        }
+        //do stuff
+    }
+
+
+</script>

@@ -1,0 +1,178 @@
+<div class="bannerOpinion">
+    <div class="bannerOpinion__container">
+        <h2 class="bannerOpinion__title">{{section.settings.title}}</h2>
+        <p class="bannerOpinion__subTitle">{{section.settings.subtitle}}</p>
+        {% if section.settings.text-btn != blank %}
+            <a class="bannerOpinion__link bfuscated-slideshow-anchor btn" href="{{section.settings.link-btn}}">{{section.settings.text-btn}}</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<style>
+.bannerOpinion {
+    position: relative;
+    height: 100%;
+}
+.bannerOpinion__container {
+    text-align: center;
+    background-image: url("{{section.settings.bg-desktop | img_url: 'master'}}");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 745px;
+}
+
+.bannerOpinion__title {
+    padding-top: 45px;
+    font-family: Poppins;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 42px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: #000;
+    max-width: 620px;
+    margin: 0 auto;
+}
+.bannerOpinion__subTitle {
+    font-family: Poppins;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #000;
+    max-width: 620px;
+    margin: 20px auto 20px auto;
+}
+.bannerOpinion__link {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    height: 42px;
+    width: 274px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.bannerOpinion__link:hover {
+    color: #fff !important;
+}
+@media(max-width: 768px ) {
+    .bannerOpinion__container {
+        background-image: url("{{section.settings.bg-mobile | img_url: 'master'}}");
+        background-position: bottom;
+        height: 480px;
+        padding: 20px 32px 20px;
+    }
+    .bannerOpinion__title {
+        padding-top: 0px;
+        font-family: Poppins;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 33px;
+        letter-spacing: 0.04em;
+        text-align: center;
+
+    }
+    .bannerOpinion__subTitle {
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+        max-width: 620px;
+        margin: 20px auto 20px auto;
+    }
+    .bannerOpinion__link {
+        font-family: Poppins;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: center;
+        height: 34px;
+        width: 200px;
+    }
+}
+</style>
+
+{% schema %}
+{
+    "name": "Opinion banner",
+    "settings": [
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "unit": "px",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "unit": "px",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "header",
+            "content": "Paddings"
+        },
+        {
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "html",
+            "id": "subtitle",
+            "label": "Sub title"
+        },
+        {
+            "type": "text",
+            "id": "text-btn",
+            "label": "Text button"
+        },
+        {
+            "type": "url",
+            "id": "link-btn",
+            "label": "Link button"
+        },
+        {
+            "type": "header",
+            "content": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg-desktop",
+            "label": "Image desktop"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg-mobile",
+            "label": "Image mobile"
+        }
+    ],
+    "presets": [
+            {
+                "name": "Opinion banner"
+            }
+    ]
+}
+{% endschema %}
